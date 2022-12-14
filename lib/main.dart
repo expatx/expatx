@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netigo_front/authentication/auth_repository.dart';
 import 'authentication/sign_in.dart';
 
 void main() {
@@ -11,8 +13,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SignIn(),
+    return MaterialApp(
+      home: RepositoryProvider(
+        create: (context) => AuthRepository(),
+        child: SignIn(),
+      ),
     );
   }
 }

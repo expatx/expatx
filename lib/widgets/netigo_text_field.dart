@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class OurTextField extends StatelessWidget {
+class NetigoTextField extends StatelessWidget {
   final String labelText;
-  const OurTextField({
+  final bool obscure;
+  final Function(String)? onChanged;
+
+  const NetigoTextField({
     super.key,
     required this.labelText,
+    this.obscure = false,
+    this.onChanged,
   });
 
   @override
@@ -21,7 +26,8 @@ class OurTextField extends StatelessWidget {
           Radius.circular(10),
         ),
       ),
-      child: TextField(
+      child: TextFormField(
+        obscureText: obscure,
         decoration: InputDecoration(
           // contentPadding: const EdgeInsets.all(10.0),
           border: InputBorder.none,
@@ -37,6 +43,7 @@ class OurTextField extends StatelessWidget {
         style: const TextStyle(
           color: Colors.blue,
         ),
+        validator: (value) => null,
       ),
     );
   }

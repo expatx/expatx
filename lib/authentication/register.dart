@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netigo_front/widgets/our_text_field.dart';
+import 'package:netigo_front/widgets/netigo_text_field.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -36,19 +36,19 @@ class Register extends StatelessWidget {
               height: 40,
             ),
             //Inputs
-            const OurTextField(labelText: "First Name"),
+            const NetigoTextField(labelText: "First Name"),
             const SizedBox(
               height: 40,
             ),
-            const OurTextField(labelText: "Last Name"),
+            const NetigoTextField(labelText: "Last Name"),
             const SizedBox(
               height: 40,
             ),
-            const OurTextField(labelText: "Email"),
+            const NetigoTextField(labelText: "Email"),
             const SizedBox(
               height: 40,
             ),
-            const OurTextField(labelText: "Password"),
+            const NetigoTextField(labelText: "Password"),
             const SizedBox(
               height: 40,
             ),
