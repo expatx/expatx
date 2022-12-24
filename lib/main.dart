@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/authentication/auth_repository.dart';
-import 'authentication/sign_in.dart';
+import 'package:netigo_front/features/authentication/auth_repository.dart';
+import 'package:netigo_front/features/authentication/presentation/pages/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: RepositoryProvider(
         create: (context) => AuthRepository(),
-        child: SignIn(),
+        child: LoginScreen(),
       ),
     );
   }

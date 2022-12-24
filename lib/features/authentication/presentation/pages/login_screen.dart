@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/authentication/auth_repository.dart';
-import 'package:netigo_front/authentication/form_submission_status.dart';
-import 'package:netigo_front/authentication/login_bloc.dart';
-import 'package:netigo_front/authentication/login_event.dart';
-import 'package:netigo_front/authentication/login_state.dart';
-import 'package:netigo_front/authentication/register.dart';
+import 'package:netigo_front/features/authentication/auth_repository.dart';
+import 'package:netigo_front/features/authentication/form_submission_status.dart';
+import 'package:netigo_front/features/authentication/presentation/bloc/login/login_bloc.dart';
+import 'package:netigo_front/features/authentication/presentation/bloc/login/login_event.dart';
+import 'package:netigo_front/features/authentication/presentation/bloc/login/login_state.dart';
+import 'package:netigo_front/features/authentication/presentation/pages/register_screen.dart';
 
-class SignIn extends StatelessWidget {
-  SignIn({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -21,131 +21,6 @@ class SignIn extends StatelessWidget {
         ),
         child: _loginForm(context),
       ),
-    );
-  }
-
-  Widget _emailField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return TextFormField(
-            validator: (value) => state.isValidEmail ? null : "Invalid Email",
-            onChanged: (value) => context.read<LoginBloc>().add(
-                  EmailChanged(email: value),
-                ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Email",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _passwordField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return TextFormField(
-            obscureText: true,
-            validator: (value) => null,
-            onChanged: (value) => context.read<LoginBloc>().add(
-                  PasswordChanged(password: value),
-                ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Password",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _signInButton(context) {
-    return // Submit Button
-        BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return state.formStatus is FormSubmitting
-            ? const CircularProgressIndicator()
-            : InkWell(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.read<LoginBloc>().add(LoginSubmitted());
-                  }
-                },
-                child: Container(
-                  //Type TextField
-                  width: MediaQuery.of(context).size.width * .8,
-                  height: 60,
-
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF003D96).withOpacity(.5),
-                    border: Border.all(
-                      color: Colors.blue,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Righteous",
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-      },
     );
   }
 
@@ -210,7 +85,7 @@ class SignIn extends StatelessWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Register()),
+                            builder: (context) => RegisterScreen()),
                       ),
                       child: const Text(
                         "Register",
@@ -226,6 +101,132 @@ class SignIn extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _emailField(context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .8,
+      height: 60,
+      decoration: BoxDecoration(
+        color: const Color(0xff222121),
+        border: Border.all(
+          color: Colors.blue,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          return TextFormField(
+            validator: (value) => state.isValidEmail ? null : "Invalid Email",
+            onChanged: (value) => context.read<LoginBloc>().add(
+                  EmailChanged(email: value),
+                ),
+            decoration: const InputDecoration(
+              // contentPadding: const EdgeInsets.all(10.0),
+              border: InputBorder.none,
+              // enabledBorder:
+              hintText: "Email",
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontFamily: "Righteous",
+                fontSize: 15,
+              ),
+            ),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.blue,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _passwordField(context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .8,
+      height: 60,
+      decoration: BoxDecoration(
+        color: const Color(0xff222121),
+        border: Border.all(
+          color: Colors.blue,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          return TextFormField(
+            obscureText: true,
+            validator: (value) =>
+                state.isValidPassword ? null : "Invalid Password",
+            onChanged: (value) => context.read<LoginBloc>().add(
+                  PasswordChanged(password: value),
+                ),
+            decoration: const InputDecoration(
+              // contentPadding: const EdgeInsets.all(10.0),
+              border: InputBorder.none,
+              // enabledBorder:
+              hintText: "Password",
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontFamily: "Righteous",
+                fontSize: 15,
+              ),
+            ),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.blue,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _signInButton(context) {
+    return // Submit Button
+        BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return state.formStatus is FormSubmitting
+            ? const CircularProgressIndicator()
+            : InkWell(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<LoginBloc>().add(LoginSubmitted());
+                  }
+                },
+                child: Container(
+                  //Type TextField
+                  width: MediaQuery.of(context).size.width * .8,
+                  height: 60,
+
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF003D96).withOpacity(.5),
+                    border: Border.all(
+                      color: Colors.blue,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Righteous",
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+      },
     );
   }
 

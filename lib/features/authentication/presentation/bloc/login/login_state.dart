@@ -1,4 +1,4 @@
-import 'package:netigo_front/authentication/form_submission_status.dart';
+import 'package:netigo_front/features/authentication/form_submission_status.dart';
 
 class LoginState {
   final String? email;
@@ -32,9 +32,6 @@ class LoginState {
     String? password,
     FormSubmissionStatus? formStatus,
   }) {
-    print("Email: ${this.email}");
-    print("Password: ${this.password}");
-    print("Form Status ${this.formStatus}");
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
