@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository.dart';
+import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:netigo_front/features/authentication/form_submission_status.dart';
 import '../bloc/register/register_bloc.dart';
 import '../bloc/register/register_event.dart';
@@ -16,7 +16,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => RegisterBloc(
-          authRepo: context.read<AuthRepository>(),
+          authRepo: context.read<AuthRepositoryImpl>(),
         ),
         child: _registerForm(context),
       ),
@@ -72,13 +72,11 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
-                      ),
+                      onTap: () {
+                        context.goNamed("login");
+                      },
                       child: const Text(
-                        "RegisterScreen",
+                        "Register Screen",
                         style: TextStyle(
                           color: Colors.blue,
                         ),

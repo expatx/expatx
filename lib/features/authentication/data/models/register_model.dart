@@ -1,11 +1,15 @@
-class LoginResponse {
+class RegisterModel {
   final int? id;
   final String? token;
   final String? error;
 
-  const LoginResponse({this.id, this.token, this.error});
+  const RegisterModel({
+    this.id,
+    this.token,
+    this.error,
+  });
 
-  LoginResponse.fromJson(dynamic json)
+  RegisterModel.fromJson(dynamic json)
       : id = json['id'] as int?,
         token = json['token'] as String?,
         error = json['error'] as String?;

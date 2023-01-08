@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:netigo_front/features/authentication/form_submission_status.dart';
 import 'package:netigo_front/features/authentication/presentation/bloc/login/login_bloc.dart';
 import 'package:netigo_front/features/authentication/presentation/bloc/login/login_event.dart';
 import 'package:netigo_front/features/authentication/presentation/bloc/login/login_state.dart';
-import 'package:netigo_front/features/authentication/presentation/pages/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -17,14 +17,14 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => LoginBloc(
-          authRepo: context.read<AuthRepository>(),
+          authRepo: context.read<AuthRepositoryImpl>(),
         ),
         child: _loginForm(context),
       ),
     );
   }
 
-  Widget _loginForm(context) {
+  Widget _loginForm(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         final formStatus = state.formStatus;
@@ -82,11 +82,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
-                      ),
+                      onTap: () {
+                        context.goNamed("register");
+                      },
                       child: const Text(
                         "Register",
                         style: TextStyle(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository.dart';
-import 'package:netigo_front/features/authentication/presentation/pages/login_screen.dart';
+import 'package:netigo_front/core/app_router.dart';
+import 'package:netigo_front/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +10,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RepositoryProvider(
-        create: (context) => AuthRepository(),
-        child: LoginScreen(),
-      ),
+    return MaterialApp.router(
+      routerConfig: AppRouter(context.read<AuthBloc>()).router,
     );
   }
 }
