@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/authentication/auth_repository.dart';
+import 'package:netigo_front/features/authentication/data/repositories/auth_repository.dart';
 import 'package:netigo_front/features/authentication/form_submission_status.dart';
 import '../bloc/register/register_bloc.dart';
 import '../bloc/register/register_event.dart';
