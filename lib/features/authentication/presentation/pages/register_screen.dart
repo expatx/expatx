@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:netigo_front/features/authentication/form_submission_status.dart';
+import 'package:netigo_front/features/shared/presentation/widgets/custom_text_field.dart';
 import '../bloc/register/register_bloc.dart';
 import '../bloc/register/register_event.dart';
 import '../bloc/register/register_state.dart';
@@ -23,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _registerForm(context) {
+  Widget _registerForm(BuildContext context) {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         final formStatus = state.formStatus;
@@ -42,49 +44,26 @@ class RegisterScreen extends StatelessWidget {
             ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              _firstNameField(context),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
-              //Inputs
+              _lastNameField(context),
+              const SizedBox(
+                height: 20,
+              ),
               _emailField(context),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               _passwordField(context),
-
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
-              // _signInButton(context),
-              Container(
-                width: MediaQuery.of(context).size.width * .8,
-                padding: const EdgeInsets.only(
-                  top: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.goNamed("login");
-                      },
-                      child: const Text(
-                        "Register Screen",
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              _registerButton(context),
+              const HaveAccountRow(),
             ],
           ),
         ),
@@ -92,87 +71,149 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
+  Widget _firstNameField(context) {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      // buildWhen: (previous, current) =>
+      //     previous.email != current.email &&
+      //     FormSubmissionStatus is FormSubmitting,
+      builder: (context, state) {
+        return CustomTextField(
+          labelText: 'First Name',
+          validator: (value) {
+            if (state.isValidFirstName) {
+              return null;
+            } else {
+              return "Invalid First Name";
+            }
+          },
+          textInputType: TextInputType.name,
+          onChanged: (value) {
+            context
+                .read<RegisterBloc>()
+                .add(RegisterFirstNameChanged(firstName: value));
+          },
+        );
+      },
+    );
+  }
+
+  Widget _lastNameField(context) {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      // buildWhen: (previous, current) =>
+      //     previous.email != current.email &&
+      //     FormSubmissionStatus is FormSubmitting,
+      builder: (context, state) {
+        return CustomTextField(
+          labelText: 'Last Name',
+          validator: (value) {
+            if (state.isValidFirstName) {
+              return null;
+            } else {
+              return "Invalid Last Name";
+            }
+          },
+          textInputType: TextInputType.name,
+          onChanged: (value) {
+            context
+                .read<RegisterBloc>()
+                .add(RegisterLastNameChanged(lastName: value));
+          },
+        );
+      },
+    );
+  }
+
   Widget _emailField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<RegisterBloc, RegisterState>(
-        builder: (context, state) {
-          return TextFormField(
-            validator: (value) => state.isValidEmail ? null : "Invalid Email",
-            onChanged: (value) => context.read<RegisterBloc>().add(
-                  RegisterEmailChanged(email: value),
-                ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Email",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
-          );
-        },
-      ),
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      // buildWhen: (previous, current) =>
+      //     previous.email != current.email &&
+      //     FormSubmissionStatus is FormSubmitting,
+      builder: (context, state) {
+        return CustomTextField(
+          labelText: 'Email',
+          validator: (value) {
+            if (state.isValidEmail) {
+              return null;
+            } else {
+              return "Invalid Email";
+            }
+          },
+          textInputType: TextInputType.emailAddress,
+          onChanged: (value) {
+            context
+                .read<RegisterBloc>()
+                .add(RegisterEmailChanged(email: value));
+          },
+        );
+      },
     );
   }
 
   Widget _passwordField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<RegisterBloc, RegisterState>(
-        builder: (context, state) {
-          return TextFormField(
-            obscureText: true,
-            validator: (value) =>
-                state.isValidPassword ? null : "Invalid Password",
-            onChanged: (value) => context.read<RegisterBloc>().add(
-                  RegisterPasswordChanged(password: value),
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      // buildWhen: (previous, current) =>
+      //     previous.email != current.email &&
+      //     FormSubmissionStatus is FormSubmitting,
+      builder: (context, state) {
+        return CustomTextField(
+          labelText: 'Password',
+          validator: (value) {
+            if (state.isValidPassword) {
+              return null;
+            } else {
+              return "Invalid Password";
+            }
+          },
+          textInputType: TextInputType.text,
+          onChanged: (value) {
+            context
+                .read<RegisterBloc>()
+                .add(RegisterEmailChanged(email: value));
+          },
+        );
+      },
+    );
+  }
+
+  Widget _registerButton(context) {
+    return // Submit Button
+        BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        return state.formStatus is FormSubmitting
+            ? const CircularProgressIndicator()
+            : InkWell(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<RegisterBloc>().add(RegisterSubmitted());
+                  }
+                },
+                child: Container(
+                  //Type TextField
+                  width: MediaQuery.of(context).size.width * .8,
+                  height: 60,
+
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF003D96).withOpacity(.5),
+                    border: Border.all(
+                      color: Colors.blue,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Register",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Righteous",
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
                 ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Password",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
-          );
-        },
-      ),
+              );
+      },
     );
   }
 
@@ -181,55 +222,41 @@ class RegisterScreen extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
-// // Submit Button
-    // Container(
 
-    //   width: MediaQuery.of(context).size.width * .8,
-    //   height: 60,
+class HaveAccountRow extends StatelessWidget {
+  const HaveAccountRow({
+    Key? key,
+  }) : super(key: key);
 
-    //   decoration: BoxDecoration(
-    //     color: const Color(0xFF003D96).withOpacity(.5),
-    //     border: Border.all(
-    //       color: Colors.blue,
-    //     ),
-    //     borderRadius: const BorderRadius.all(
-    //       Radius.circular(10),
-    //     ),
-    //   ),
-    //   child: const Center(
-    //     child: Text(
-    //       "Submit",
-    //       style: TextStyle(
-    //         color: Colors.white,
-    //         fontFamily: "Righteous",
-    //         fontSize: 18,
-    //       ),
-    //     ),
-    //   ),
-    // ),
-    // Container(
-    //   width: MediaQuery.of(context).size.width * .8,
-    //   padding: const EdgeInsets.only(
-    //     top: 30,
-    //   ),
-    //   child: Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //     children: [
-    //       const Text(
-    //         "Already have an account?",
-    //         style: TextStyle(
-    //           color: Colors.white,
-    //         ),
-    //       ),
-    //       InkWell(
-    //         onTap: () => Navigator.pop(context),
-    //         child: const Text(
-    //           "Sign In",
-    //           style: TextStyle(
-    //             color: Colors.blue,
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // )
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .8,
+      padding: const EdgeInsets.only(
+        top: 20,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Text(
+            "Already have an account?",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              context.goNamed("login");
+            },
+            child: const Text(
+              "Register Screen",
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

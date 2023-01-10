@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:netigo_front/features/authentication/domain/usecases/get_logged_in_user.dart';
 import 'package:netigo_front/features/authentication/presentation/pages/register_screen.dart';
 
-import '../features/authentication/domain/repositories/auth_repository.dart';
 import '../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../features/authentication/presentation/pages/login_screen.dart';
 
@@ -21,21 +18,15 @@ class AppRouter {
         name: 'login',
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return BlocProvider(
-            create: (context) =>
-                AuthBloc(getLoggedInUser: GetLoggedInUser(AuthRepository())),
-            child: LoginScreen(),
-          );
+          return LoginScreen();
         },
-        routes: [
-          GoRoute(
-            name: 'register',
-            path: '/register',
-            builder: (BuildContext context, GoRouterState state) {
-              return RegisterScreen();
-            },
-          ),
-        ],
+      ),
+      GoRoute(
+        name: 'register',
+        path: '/register',
+        builder: (BuildContext context, GoRouterState state) {
+          return RegisterScreen();
+        },
       ),
     ],
     // redirect: (
