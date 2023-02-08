@@ -6,12 +6,14 @@ import 'package:netigo_front/features/authentication/data/repositories/auth_repo
 import 'package:netigo_front/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'package:netigo_front/features/authentication/presentation/bloc/login/login_bloc.dart';
 import 'package:netigo_front/features/authentication/presentation/bloc/register/register_bloc.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'features/authentication/domain/usecases/get_auth_status.dart';
 import 'features/authentication/domain/usecases/get_logged_in_user.dart';
 import 'features/authentication/domain/usecases/logout_user.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 

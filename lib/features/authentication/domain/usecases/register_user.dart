@@ -9,7 +9,7 @@ class RegisterUser implements UseCase<void, SignupUserParams> {
 
   @override
   Future<void> call(SignupUserParams params) {
-    // TODO: Add another repository to save the user into a database when he/she register.
+    // Add another repository to save the user into a database when he/she register.
     return authRepository.register(
       loggedInUser: params.user,
     );

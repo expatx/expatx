@@ -61,7 +61,6 @@ class AuthDatasourceImpl extends AuthDatasource {
 
   @override
   Future<void> logout() {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 

@@ -95,6 +95,22 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              InkWell(
+                onTap: () {
+                  context.go("/home");
+                },
+                child: Container(
+                  color: Colors.blue,
+                  margin: const EdgeInsets.only(
+                    top: 20,
+                  ),
+                  width: MediaQuery.of(context).size.width * .2,
+                  height: 60,
+                  child: const Center(
+                    child: Text("Home Screen"),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

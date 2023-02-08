@@ -18,7 +18,6 @@ class LoggedInUser extends User {
     email: "email",
   );
 
-  @override
   List<Object?> get props =>
       [id, firstName, lastName, email, followers, followings, imagePath, email];
 

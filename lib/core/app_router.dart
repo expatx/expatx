@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:netigo_front/features/authentication/presentation/pages/register_screen.dart';
+import 'package:netigo_front/features/home/presentation/pages/details.dart';
+import 'package:netigo_front/features/home/presentation/pages/home_screen.dart';
 
 import '../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../features/authentication/presentation/pages/login_screen.dart';
@@ -13,6 +15,7 @@ class AppRouter {
   AppRouter(this.authBloc);
 
   late final GoRouter router = GoRouter(
+    initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
         name: 'login',
@@ -28,7 +31,27 @@ class AppRouter {
           return RegisterScreen();
         },
       ),
+      GoRoute(
+        name: 'home',
+        path: '/home',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomeScreen();
+        },
+        routes: [
+          GoRoute(
+            name: "details",
+            path: "details/:name",
+            builder: (context, state) {
+              return DetailsScreen(
+                name: state.params["name"]!,
+                age: state.queryParams["age"]!,
+              );
+            },
+          ),
+        ],
+      ),
     ],
+    // errorBuilder: (context, state) => const ErrorScreen(),
     // redirect: (
     //   BuildContext context,
     //   GoRouterState state,
