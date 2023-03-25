@@ -4,7 +4,7 @@ import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:netigo_front/core/cache/cache_helper.dart';
 import 'package:netigo_front/features/authentication/domain/entities/logged_in_user.dart';
-import 'package:netigo_front/features/feed/profile/data/model/profile_model.dart';
+import 'package:netigo_front/features/tabs/profile/data/model/profile_model.dart';
 
 class CacheHelperImpl extends CacheHelper {
   final APICacheManager cacheManager = APICacheManager();

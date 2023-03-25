@@ -6,7 +6,7 @@ import '../features/authentication/data/datasources/auth_datasource.dart';
 import '../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../features/authentication/presentation/pages/login_screen.dart';
 import '../features/authentication/presentation/pages/register_screen.dart';
-import '../features/shared/presentation/pages/feed_screen.dart';
+import '../features/shared/presentation/pages/tab_screen.dart';
 
 class AppRouter {
   final AuthBloc authBloc;
@@ -19,7 +19,7 @@ class AppRouter {
         name: 'feed',
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return const FeedScreen();
+          return const TabScreen();
         },
       ),
       GoRoute(

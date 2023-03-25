@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: AppColors.netigoDarkGrey,
       // resizeToAvoidBottomInset: false,
       body: _loginForm(context),
     );
@@ -36,12 +36,12 @@ class LoginScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(
                 top: 190,
-                bottom: 80,
+                bottom: 0,
               ),
 
               child: Image.asset(
                 'assets/images/netigo_logo_blue.png',
-                width: MediaQuery.of(context).size.width * .5,
+                width: MediaQuery.of(context).size.width * .9,
               ), //
             ),
 
@@ -121,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                     height: 62,
 
                     decoration: BoxDecoration(
-                      color: AppColors.stellarBlue.withOpacity(.75),
+                      color: AppColors.netigoBlue.withOpacity(.75),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -169,7 +169,7 @@ class RegisterRedirect extends StatelessWidget {
           const Text(
             "Don't have an account?",
             style: TextStyle(
-              color: AppColors.stellarDarkGrey,
+              color: AppColors.netigoLightGrey,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w700,
               fontSize: 15,
@@ -182,7 +182,7 @@ class RegisterRedirect extends StatelessWidget {
             child: const Text(
               "Register",
               style: TextStyle(
-                color: AppColors.stellarDarkGrey,
+                color: AppColors.netigoLightGrey,
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w700,
                 fontSize: 15,

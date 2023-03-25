@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: AppColors.stellarBlue,
+          color: AppColors.netigoBlue,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
@@ -45,7 +45,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.stellarBlue, width: 1.0),
+            borderSide: BorderSide(color: AppColors.netigoBlue, width: 1.0),
           ),
           hintText: labelText,
           errorText: errorText,

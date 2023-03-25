@@ -1,6 +1,6 @@
 import 'package:netigo_front/features/authentication/domain/entities/logged_in_user.dart';
 
-import '../../features/feed/profile/data/model/profile_model.dart';
+import '../../features/tabs/profile/data/model/profile_model.dart';
 
 abstract class CacheHelper {
   Future<void> cacheProfile(ProfileModel profileToCache);
