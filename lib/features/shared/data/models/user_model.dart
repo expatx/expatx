@@ -1,57 +1,49 @@
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_entity.dart';
 
 class UserModel {
-  final String id;
+  final int id;
   final String firstName;
   final String lastName;
   final String email;
-  final int followers;
-  final int followings;
-  final String? imagePath;
+  // final Password? password;
 
   const UserModel({
     required this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
-    this.followers = 0,
-    this.followings = 0,
-    this.imagePath,
+    //  this.password,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
       email: json['email'],
-      imagePath: json['imagePath'],
-      followers: json['followers'],
-      followings: json['followings'],
+      // password: json['password'],
     );
   }
 
-  factory UserModel.fromEntity(User user) {
+  //The next two methods we are converting a User Entity to a User Model and vice versa.
+
+  factory UserModel.fromEntity(UserEntity user) {
     return UserModel(
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email,
-      imagePath: user.imagePath,
-      followers: user.followers,
-      followings: user.followings,
+      email: user.email.value,
+      // password: user.password,
     );
   }
 
-  User toEntity() {
-    return User(
+  UserEntity toEntity() {
+    return UserEntity(
       id: id,
       firstName: firstName,
       lastName: lastName,
-      email: email,
-      imagePath: imagePath,
-      followers: followers,
-      followings: followings,
+      email: Email.dirty(email),
+      // password: password!,
     );
   }
 }

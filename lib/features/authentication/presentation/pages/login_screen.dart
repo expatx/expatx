@@ -1,201 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:netigo_front/features/authentication/form_submission_status.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/login/login_bloc.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/login/login_event.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/login/login_state.dart';
+import 'package:netigo_front/core/app_colors.dart';
+import '../../../shared/presentation/widgets/custom_text_field.dart';
+import '../bloc/login/login_cubit.dart';
+import '../bloc/login/login_state.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-
-  final _formKey = GlobalKey<FormState>();
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => LoginBloc(
-          authRepo: context.read<AuthRepositoryImpl>(),
-        ),
-        child: _loginForm(context),
-      ),
+      backgroundColor: Colors.blue,
+      // resizeToAvoidBottomInset: false,
+      body: _loginForm(context),
     );
   }
 
   Widget _loginForm(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        final formStatus = state.formStatus;
-        if (formStatus is SubmissionFailed) {
-          _showSnackBar(context, formStatus.exception.toString());
+        if (state.status.isSubmissionFailure) {
+          _showSnackBar(context, state.errorText ?? "Auth Failure");
         }
       },
-      child: Form(
-        key: _formKey,
-        child: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/home_background.png"),
-              fit: BoxFit.cover,
+      child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //Logo
+            Container(
+              margin: const EdgeInsets.only(
+                top: 190,
+                bottom: 80,
+              ),
+
+              child: Image.asset(
+                'assets/images/netigo_logo_blue.png',
+                width: MediaQuery.of(context).size.width * .5,
+              ), //
             ),
-          ),
-          child: Column(
-            children: [
-              //Logo
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 140,
-                ),
 
-                child: Image.asset('assets/images/netigo_logo_blue.png'), //
-              ),
+            //Inputs
+            _emailField(context),
+            const SizedBox(height: 30),
+            _passwordField(context),
 
-              const SizedBox(
-                height: 10,
-              ),
-              //Inputs
-              _emailField(context),
-              const SizedBox(
-                height: 30,
-              ),
-              _passwordField(context),
-
-              const SizedBox(
-                height: 30,
-              ),
-              _signInButton(context),
-              Container(
-                width: MediaQuery.of(context).size.width * .8,
-                padding: const EdgeInsets.only(
-                  top: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.goNamed("register");
-                      },
-                      child: const Text(
-                        "Register",
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  context.go("/home");
-                },
-                child: Container(
-                  color: Colors.blue,
-                  margin: const EdgeInsets.only(
-                    top: 20,
-                  ),
-                  width: MediaQuery.of(context).size.width * .2,
-                  height: 60,
-                  child: const Center(
-                    child: Text("Home Screen"),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            const SizedBox(height: 30),
+            _signInButton(context),
+            const RegisterRedirect(),
+          ],
         ),
       ),
     );
   }
 
   Widget _emailField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<LoginBloc, LoginState>(
+    return Align(
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) {
+          return previous.email != current.email;
+        },
         builder: (context, state) {
-          return TextFormField(
-            validator: (value) => state.isValidEmail ? null : "Invalid Email",
-            onChanged: (value) => context.read<LoginBloc>().add(
-                  EmailChanged(email: value),
-                ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Email",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
-          );
+          return CustomTextField(
+              labelText: "Email",
+              onChanged: (value) =>
+                  context.read<LoginCubit>().emailChanged(value));
         },
       ),
     );
   }
 
   Widget _passwordField(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .8,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xff222121),
-        border: Border.all(
-          color: Colors.blue,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: BlocBuilder<LoginBloc, LoginState>(
+    return Align(
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) {
+          return previous.password != current.password;
+        },
         builder: (context, state) {
-          return TextFormField(
+          return CustomTextField(
+            labelText: "Password",
             obscureText: true,
-            validator: (value) =>
-                state.isValidPassword ? null : "Invalid Password",
-            onChanged: (value) => context.read<LoginBloc>().add(
-                  PasswordChanged(password: value),
-                ),
-            decoration: const InputDecoration(
-              // contentPadding: const EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              // enabledBorder:
-              hintText: "Password",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: "Righteous",
-                fontSize: 15,
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
+            onChanged: (value) =>
+                context.read<LoginCubit>().passwordChanged(value),
           );
         },
       ),
@@ -204,48 +95,103 @@ class LoginScreen extends StatelessWidget {
 
   Widget _signInButton(context) {
     return // Submit Button
-        BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return state.formStatus is FormSubmitting
-            ? const CircularProgressIndicator()
-            : InkWell(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.read<LoginBloc>().add(LoginSubmitted());
-                  }
-                },
-                child: Container(
-                  //Type TextField
-                  width: MediaQuery.of(context).size.width * .8,
-                  height: 60,
+        Align(
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) {
+          return previous.status != current.status;
+        },
+        builder: (context, state) {
+          return state.status == FormzStatus.submissionInProgress
+              ? const CircularProgressIndicator()
+              : InkWell(
+                  onTap: () {
+                    state.status == FormzStatus.valid
+                        ? context.read<LoginCubit>().logInWithCredentials()
+                        : ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Check your username and password: ${state.status}',
+                              ),
+                            ),
+                          );
+                  },
+                  child: Container(
+                    //Type TextField
+                    width: MediaQuery.of(context).size.width * .8,
+                    height: 62,
 
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF003D96).withOpacity(.5),
-                    border: Border.all(
-                      color: Colors.blue,
+                    decoration: BoxDecoration(
+                      color: AppColors.stellarBlue.withOpacity(.75),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Righteous",
-                        fontSize: 18,
+                    child: const Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-      },
+                );
+        },
+      ),
     );
   }
 
   void _showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}
+
+class RegisterRedirect extends StatelessWidget {
+  const RegisterRedirect({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .8,
+      padding: const EdgeInsets.only(
+        top: 30,
+        bottom: 20,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Text(
+            "Don't have an account?",
+            style: TextStyle(
+              color: AppColors.stellarDarkGrey,
+              fontFamily: "Roboto",
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              context.goNamed("register");
+            },
+            child: const Text(
+              "Register",
+              style: TextStyle(
+                color: AppColors.stellarDarkGrey,
+                fontFamily: "Roboto",
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

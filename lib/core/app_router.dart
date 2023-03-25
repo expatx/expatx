@@ -1,14 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
-import 'package:netigo_front/features/authentication/presentation/pages/register_screen.dart';
-import 'package:netigo_front/features/home/presentation/pages/details.dart';
-import 'package:netigo_front/features/home/presentation/pages/home_screen.dart';
-
+import '../features/authentication/data/datasources/auth_datasource.dart';
 import '../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../features/authentication/presentation/pages/login_screen.dart';
+import '../features/authentication/presentation/pages/register_screen.dart';
+import '../features/shared/presentation/pages/feed_screen.dart';
 
 class AppRouter {
   final AuthBloc authBloc;
@@ -18,64 +16,57 @@ class AppRouter {
     initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
-        name: 'login',
+        name: 'feed',
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return LoginScreen();
+          return const FeedScreen();
         },
       ),
       GoRoute(
-        name: 'register',
-        path: '/register',
+        name: 'login',
+        path: '/login',
         builder: (BuildContext context, GoRouterState state) {
-          return RegisterScreen();
-        },
-      ),
-      GoRoute(
-        name: 'home',
-        path: '/home',
-        builder: (BuildContext context, GoRouterState state) {
-          return const HomeScreen();
+          return const LoginScreen();
         },
         routes: [
           GoRoute(
-            name: "details",
-            path: "details/:name",
-            builder: (context, state) {
-              return DetailsScreen(
-                name: state.params["name"]!,
-                age: state.queryParams["age"]!,
-              );
+            name: 'register',
+            path: 'register',
+            builder: (BuildContext context, GoRouterState state) {
+              return const RegisterScreen();
             },
           ),
         ],
       ),
     ],
-    // errorBuilder: (context, state) => const ErrorScreen(),
-    // redirect: (
-    //   BuildContext context,
-    //   GoRouterState state,
-    // ) {
-    //   final loginLocation = state.namedLocation('login');
-    //   final signupLocation = state.namedLocation('signup');
+    redirect: (
+      BuildContext context,
+      GoRouterState state,
+    ) {
+      // ignore: deprecated_member_use
+      final loginLocation = state.namedLocation('login');
+      // ignore: deprecated_member_use
+      final signupLocation = state.namedLocation('register');
 
-    //   final bool isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
+      final bool isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
+      // ignore: avoid_print
+      print(authBloc.state.status);
 
-    //   final isLoggingIn = state.subloc == loginLocation;
-    //   final isSigningUp = state.subloc == signupLocation;
+      final isLoggingIn = state.subloc == loginLocation;
+      final isSigningUp = state.subloc == signupLocation;
 
-    //   if (!isLoggedIn && !isLoggingIn && !isSigningUp) {
-    //     return '/login';
-    //   }
-    //   if (isLoggedIn && isLoggingIn) {
-    //     return '/';
-    //   }
-    //   if (isLoggedIn && isSigningUp) {
-    //     return '/';
-    //   }
-    //   return null;
-    // },
-    // refreshListenable: GoRouterRefreshStream(authBloc.stream),
+      if (!isLoggedIn && !isLoggingIn && !isSigningUp) {
+        return '/login';
+      }
+      if (isLoggedIn && isLoggingIn) {
+        return '/';
+      }
+      if (isLoggedIn && isSigningUp) {
+        return '/';
+      }
+      return null;
+    },
+    refreshListenable: GoRouterRefreshStream(authBloc.stream),
   );
 }
 

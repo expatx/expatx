@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/core/app_router.dart';
-import 'package:netigo_front/features/authentication/data/datasources/auth_datasource.dart';
-import 'package:netigo_front/features/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/auth/auth_bloc.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/login/login_bloc.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/register/register_bloc.dart';
-import 'package:url_strategy/url_strategy.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:netigo_front/core/environment/environment.dart';
+import 'package:netigo_front/core/network/network_info.dart';
+import 'package:netigo_front/features/feed/finances/data/datasource/finance_datasource.dart';
+import 'package:netigo_front/features/feed/finances/data/repository/finance_repository_impl.dart';
+import 'package:netigo_front/features/feed/finances/domain/usecase/get_finance_history.dart';
+import 'package:netigo_front/features/feed/finances/presentation/bloc/finance_bloc.dart';
+import 'package:netigo_front/features/feed/history/data/datasources/history_datasource.dart';
+import 'package:netigo_front/features/feed/history/data/repositories/history_repository_impl.dart';
+import 'package:netigo_front/features/feed/history/domain/usecases/get_job_history.dart';
+import 'package:netigo_front/features/feed/history/presentation/bloc/history_bloc.dart';
+import 'package:netigo_front/features/feed/profile/data/datasource/profile_local_datasource.dart';
+import 'package:netigo_front/features/feed/profile/data/datasource/profile_remote_datasource.dart';
+import 'package:netigo_front/features/feed/profile/data/repository/profile_repository_impl.dart';
+import 'package:netigo_front/features/feed/profile/domain/usecase/get_user_profile.dart';
+import 'package:netigo_front/features/feed/profile/presentation/bloc/user_profile_bloc.dart';
 
+import 'core/app_router.dart';
+import 'features/authentication/data/datasources/auth_datasource.dart';
+import 'features/authentication/data/repositories/auth_repository_impl.dart';
 import 'features/authentication/domain/usecases/get_auth_status.dart';
 import 'features/authentication/domain/usecases/get_logged_in_user.dart';
+import 'features/authentication/domain/usecases/login_user.dart';
 import 'features/authentication/domain/usecases/logout_user.dart';
+import 'features/authentication/domain/usecases/register_user.dart';
+import 'features/authentication/presentation/bloc/auth/auth_bloc.dart';
+import 'features/authentication/presentation/bloc/login/login_cubit.dart';
+import 'features/authentication/presentation/bloc/register/register_cubit.dart';
 
 void main() {
-  setPathUrlStrategy();
+  // Our default will eventually be DEV, but for now running backend on local.
+  const String environment =
+      String.fromEnvironment('ENVIRONMENT', defaultValue: Environment.local);
+
+  Environment().initConfig(environment);
+
   runApp(const MyApp());
 }
 
@@ -46,24 +68,54 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => LoginBloc(
-              authRepo: AuthRepositoryImpl(
-                AuthDatasourceImpl(),
+            create: (context) => LoginCubit(
+              loginUser: LoginUser(
+                context.read<AuthRepositoryImpl>(),
               ),
             ),
           ),
           BlocProvider(
-            create: (context) => RegisterBloc(
-              authRepo: AuthRepositoryImpl(
-                AuthDatasourceImpl(),
+            create: (context) => RegisterCubit(
+              registerUser: RegisterUser(
+                context.read<AuthRepositoryImpl>(),
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => HistoryBloc(
+              getJobHistory: GetJobHistory(
+                repository: HistoryRepositoryImpl(
+                  remoteDataSource: HistoryDataSourceImpl(),
+                ),
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => FinanceBloc(
+              getFinanceHistory: GetFinanceHistory(
+                repository: FinanceRepositoryImpl(
+                  remoteDataSource: FinanceDataSourceImpl(),
+                ),
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => UserProfileBloc(
+              getUserProfile: GetUserProfile(
+                repository: ProfileRepositoryImpl(
+                  remoteDataSource: ProfileRemoteDatasourceImpl(),
+                  localDataSource: ProfileLocalDatasourceImpl(),
+                  networkInfo: NetworkInfoImpl(InternetConnectionChecker()),
+                ),
               ),
             ),
           ),
         ],
-        child: Builder(builder: (context) {
+        child: Builder(builder: (bcontext) {
           return MaterialApp.router(
-            title: 'Netigo',
-            routerConfig: AppRouter(context.read<AuthBloc>()).router,
+            debugShowCheckedModeBanner: false,
+            title: 'Stellar',
+            routerConfig: AppRouter(bcontext.read<AuthBloc>()).router,
           );
         }),
       ),
