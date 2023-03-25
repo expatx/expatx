@@ -1,66 +1,61 @@
-import 'package:netigo_front/features/authentication/form_submission_status.dart';
+import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
 
-class RegisterState {
-  final String? firstName;
-  final String? lastName;
-  final String? email;
-  final String? password;
+import '../../../../shared/domain/entities/user_entity.dart';
 
-  bool get isValidFirstName {
-    if (firstName!.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+class RegisterState extends Equatable {
+  final String firstName;
+  final String lastName;
+  final Email email;
+  final Password password;
+  final FormzStatus status;
+  final String? errorText;
 
-  bool get isValidLastName {
-    if (lastName!.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool get isValidEmail {
-    if (email!.length > 3 && email!.contains("@")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool get isValidPassword {
-    if (password!.length < 6) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  final FormSubmissionStatus? formStatus;
-
-  RegisterState({
+  const RegisterState({
     this.firstName = '',
     this.lastName = '',
-    this.email = '',
-    this.password = '',
-    this.formStatus = const InitialFormStatus(),
+    this.email = const Email.pure(),
+    this.password = const Password.pure(),
+    this.status = FormzStatus.pure,
+    this.errorText,
   });
+
+  factory RegisterState.initial() {
+    return const RegisterState(
+      firstName: "",
+      lastName: "",
+      email: Email.pure(),
+      password: Password.pure(),
+      status: FormzStatus.pure,
+      errorText: null,
+    );
+  }
 
   RegisterState copyWith({
     String? firstName,
     String? lastName,
-    String? email,
-    String? password,
-    FormSubmissionStatus? formStatus,
+    Email? email,
+    Password? password,
+    FormzStatus? status,
+    String? errorText,
   }) {
     return RegisterState(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
       password: password ?? this.password,
-      formStatus: formStatus ?? this.formStatus,
+      status: status ?? this.status,
+      errorText: errorText ?? this.errorText,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        firstName,
+        lastName,
+        email,
+        password,
+        status,
+        errorText,
+      ];
 }

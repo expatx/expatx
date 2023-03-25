@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const lightGrey = Color(0xFFD9D9D9);
-  static const black = Color(0xFF0D0B26);
-  static const darkBlue = Color(0xFF003D96);
+  // New colors
+  static const netigoBlue = Color(0xFF43C6EF);
+  static const netigoLightGrey = Color(0xFFEEEEEE);
+  static const netigoMediumGrey = Color(0xFFB2B2B2);
+  static const netigoDarkGrey = Color(0xFF495767);
+  static const netigoGreen = Color(0xFFB2D389);
+  static const netigoBackground = Color(0xFFFAFAFA);
 }

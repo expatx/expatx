@@ -1,43 +1,52 @@
-import '../../../shared/domain/entities/user.dart';
+import '../../../shared/domain/entities/user_entity.dart';
 
-class LoggedInUser extends User {
+class LoggedInUser extends UserEntity {
   const LoggedInUser({
     required super.id,
     required super.firstName,
     required super.lastName,
     required super.email,
-    super.imagePath,
-    super.followers,
-    super.followings,
+    // required super.password,
   });
 
   static const empty = LoggedInUser(
-    id: "1",
-    firstName: "firstName",
-    lastName: "lastName",
-    email: "email",
+    id: 0,
+    firstName: "User First",
+    lastName: "User Last",
+    email: Email.pure(),
+    // password: Password.pure(),
   );
 
-  List<Object?> get props =>
-      [id, firstName, lastName, email, followers, followings, imagePath, email];
+  @override
+  List<Object?> get props => [
+        id,
+        firstName,
+        lastName,
+        email,
+      ];
 
   LoggedInUser copyWith({
-    String? id,
+    int? id,
     String? firstName,
     String? lastName,
-    String? email,
-    String? imagePath,
-    int? followers,
-    int? followings,
+    Email? email,
+    Password? password,
   }) {
     return LoggedInUser(
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
-      imagePath: imagePath ?? this.imagePath,
-      followers: followers ?? this.followers,
-      followings: followings ?? this.followings,
+      // password: password ?? this.password,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "user": {
+          "first_name": firstName,
+          "last_name": lastName,
+          "email": email.value,
+          // "password": password.value,
+        }
+      };
 }

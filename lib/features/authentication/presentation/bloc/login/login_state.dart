@@ -1,41 +1,44 @@
-import 'package:netigo_front/features/authentication/form_submission_status.dart';
+import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
 
-class LoginState {
-  final String? email;
-  final String? password;
-  bool get isValidEmail {
-    if (email!.length > 3 && email!.contains("@")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+import '../../../../shared/domain/entities/user_entity.dart';
 
-  bool get isValidPassword {
-    if (password!.length < 6) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+class LoginState extends Equatable {
+  final Email email;
+  final Password password;
+  final FormzStatus status;
+  final String? errorText;
 
-  final FormSubmissionStatus? formStatus;
-
-  LoginState({
-    this.email = '',
-    this.password = '',
-    this.formStatus = const InitialFormStatus(),
+  const LoginState({
+    this.email = const Email.pure(),
+    this.password = const Password.pure(),
+    this.status = FormzStatus.pure,
+    this.errorText,
   });
 
+  factory LoginState.initial() {
+    return const LoginState(
+      email: Email.pure(),
+      password: Password.pure(),
+      status: FormzStatus.pure,
+      errorText: null,
+    );
+  }
+
   LoginState copyWith({
-    String? email,
-    String? password,
-    FormSubmissionStatus? formStatus,
+    Email? email,
+    Password? password,
+    FormzStatus? status,
+    String? errorText,
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
-      formStatus: formStatus ?? this.formStatus,
+      status: status ?? this.status,
+      errorText: errorText ?? this.errorText,
     );
   }
+
+  @override
+  List<Object?> get props => [email, password, status, errorText];
 }

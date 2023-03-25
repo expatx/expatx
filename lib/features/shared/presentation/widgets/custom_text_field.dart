@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netigo_front/core/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -7,14 +8,14 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.textInputType = TextInputType.text,
     this.obscureText = false,
-    this.validator,
+    this.errorText,
   }) : super(key: key);
 
   final String labelText;
   final Function(String)? onChanged;
   final TextInputType textInputType;
   final bool obscureText;
-  final String? Function(String?)? validator;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,36 +23,39 @@ class CustomTextField extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .8,
       height: 60,
       decoration: BoxDecoration(
-        color: const Color(0xff222121),
+        color: Colors.white,
         border: Border.all(
-          color: Colors.blue,
+          color: AppColors.netigoBlue,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
       ),
       child: TextFormField(
+        textAlign: TextAlign.center,
         onChanged: onChanged,
         keyboardType: textInputType,
         obscureText: obscureText,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Colors.white,
-              fontSize: 20,
-            ),
+        style: const TextStyle(
+          color: Colors.black,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+        ),
         decoration: InputDecoration(
-          // contentPadding: const EdgeInsets.all(10.0),
           border: InputBorder.none,
-          // enabledBorder:
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.netigoBlue, width: 1.0),
+          ),
           hintText: labelText,
-
+          errorText: errorText,
           hintStyle: const TextStyle(
-            color: Colors.white,
-            fontFamily: "Righteous",
-            fontSize: 15,
+            color: Colors.black,
+            fontFamily: "Roboto",
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
           ),
         ),
-        validator: validator,
-        textAlign: TextAlign.center,
       ),
     );
   }

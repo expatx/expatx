@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../shared/domain/usecases/usecases.dart';
 import '../../../data/datasources/auth_datasource.dart';
 import '../../../domain/entities/logged_in_user.dart';
@@ -14,7 +13,7 @@ import '../../../domain/usecases/logout_user.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> with ChangeNotifier {
   final LogoutUser _logoutUser;
   final GetAuthStatus _getAuthStatus;
   final GetLoggedInUser _getLoggedInUser;
@@ -32,6 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthGetStatus>(_onAuthGetStatus);
     on<AuthLogoutUser>(_onAuthLogoutUser);
 
+    //Everytime their is a new status returned by the stream, we add the AuthGetStatus event, which will invoke the _onAuthGetStatus method.
     _authStatusSubscription = _getAuthStatus(NoParams()).listen((status) {
       add(AuthGetStatus(status));
     });
@@ -48,6 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return emit(const AuthState.unauthenticated());
       case AuthStatus.unknown:
         return emit(const AuthState.unknown());
+      //Authenticated status requires a user object. We can use the get_logged_in_user usecase for this.
       case AuthStatus.authenticated:
         final user = await _getLoggedInUser(NoParams());
         return emit(

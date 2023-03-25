@@ -1,6 +1,10 @@
-import 'package:netigo_front/features/authentication/data/datasources/auth_datasource.dart';
-import 'package:netigo_front/features/authentication/domain/entities/logged_in_user.dart';
-import 'package:netigo_front/features/authentication/domain/repositories/auth_repository.dart';
+import 'package:dartz/dartz.dart';
+
+import '../../../shared/data/models/user_model.dart';
+import '../../../shared/domain/entities/user_entity.dart';
+import '../../domain/entities/logged_in_user.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../datasources/auth_datasource.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthDatasource authDatasource;
@@ -14,16 +18,38 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoggedInUser> get loggedInUser => authDatasource.loggedInUser;
 
   @override
-  Future<void> login({
-    required String email,
-    required String password,
-  }) {
-    return authDatasource.login(email: email, password: password);
+  Future<Either<String, UserEntity>> login({
+    required Email email,
+    required Password password,
+  }) async {
+    try {
+      UserModel userModel =
+          await authDatasource.login(email: email, password: password);
+      UserEntity userEntity = userModel.toEntity();
+      return Right(userEntity);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
   @override
-  Future<void> register({required LoggedInUser loggedInUser}) {
-    return authDatasource.register(loggedInUser: loggedInUser);
+  Future<Either<String, UserEntity>> register(
+      {required String firstName,
+      required String lastName,
+      required Email email,
+      required Password password}) async {
+    try {
+      UserModel userModel = await authDatasource.register(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password);
+
+      UserEntity userEntity = userModel.toEntity();
+      return Right(userEntity);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
   @override

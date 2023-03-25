@@ -1,5 +1,6 @@
+import 'package:netigo_front/features/shared/domain/entities/user_entity.dart';
+
 import '../../../shared/domain/usecases/usecases.dart';
-import '../entities/logged_in_user.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUser implements UseCase<void, SignupUserParams> {
@@ -8,19 +9,29 @@ class RegisterUser implements UseCase<void, SignupUserParams> {
   RegisterUser(this.authRepository);
 
   @override
-  Future<void> call(SignupUserParams params) {
-    // Add another repository to save the user into a database when he/she register.
-    return authRepository.register(
-      loggedInUser: params.user,
+  call(SignupUserParams params) async {
+    return await authRepository.register(
+      firstName: params.firstName,
+      lastName: params.lastName,
+      email: params.email,
+      password: params.password,
     );
   }
 }
 
 class SignupUserParams extends Params {
-  final LoggedInUser user;
+  final String firstName;
+  final String lastName;
+  final Email email;
+  final Password password;
 
-  SignupUserParams({required this.user});
+  SignupUserParams({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.password,
+  });
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [firstName, lastName, email, password];
 }
