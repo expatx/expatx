@@ -5,7 +5,7 @@ class UserEntity extends Equatable {
   final int id;
   final String firstName;
   final String lastName;
-  final Email email;
+  final String email;
   // final Password password;
 
   const UserEntity({
@@ -20,7 +20,7 @@ class UserEntity extends Equatable {
     id: 0,
     firstName: 'User',
     lastName: "user lastname",
-    email: Email.pure(),
+    email: "emptyemail@email.com",
     // password: Password.pure(),
   );
 

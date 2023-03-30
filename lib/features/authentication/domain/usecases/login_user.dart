@@ -17,7 +17,7 @@ class LoginUser implements UseCase<void, LoginUserParams> {
 }
 
 class LoginUserParams extends Params {
-  final Email email;
+  final String email;
   final Password password;
 
   LoginUserParams({

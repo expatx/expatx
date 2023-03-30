@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 
 import '../../../shared/data/models/user_model.dart';
 import '../../../shared/domain/entities/user_entity.dart';
-import '../../domain/entities/logged_in_user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_datasource.dart';
 
@@ -15,11 +14,11 @@ class AuthRepositoryImpl extends AuthRepository {
   Stream<AuthStatus> get status => authDatasource.status;
 
   @override
-  Future<LoggedInUser> get loggedInUser => authDatasource.loggedInUser;
+  Future<UserEntity> get loggedInUser => authDatasource.loggedInUser;
 
   @override
   Future<Either<String, UserEntity>> login({
-    required Email email,
+    required String email,
     required Password password,
   }) async {
     try {
@@ -36,7 +35,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<String, UserEntity>> register(
       {required String firstName,
       required String lastName,
-      required Email email,
+      required String email,
       required Password password}) async {
     try {
       UserModel userModel = await authDatasource.register(

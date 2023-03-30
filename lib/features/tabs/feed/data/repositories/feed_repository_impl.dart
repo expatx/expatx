@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:netigo_front/features/tabs/feed/data/datasources/feed_datasource.dart';
 import 'package:netigo_front/features/tabs/feed/data/models/feed_model.dart';
 import 'package:netigo_front/features/tabs/feed/domain/entities/feed_entity.dart';
 import 'package:netigo_front/features/tabs/feed/domain/repositories/feed_repository.dart';
+
+import '../../../../../core/cache/cache_helper_impl.dart';
+import '../../../../shared/data/models/user_model.dart';
 
 class FeedRepositoryImpl implements FeedRepository {
   final FeedDataSource remoteDataSource;
@@ -13,13 +15,18 @@ class FeedRepositoryImpl implements FeedRepository {
   @override
   Future<Either<String, List<FeedEntity>>> getFeedHistory() async {
     try {
-      final Response response = await remoteDataSource.getFeedHistory();
+      UserModel currentUser = await CacheHelperImpl().getCurrentUser();
+      int currentUserId = currentUser.id;
 
-      final data = response.data['data'];
+      final List<FeedModel> listFeedModels =
+          await remoteDataSource.getFeedItems(currentUserId);
 
-      List<FeedEntity> entities = data
-          .map<FeedEntity>((entity) => FeedModel.fromJson(entity).toEntity())
-          .toList();
+      // Convert List of models to list of entities
+      List<FeedEntity> entities = [];
+      for (FeedModel feedModel in listFeedModels) {
+        FeedEntity newEntity = feedModel.toEntity();
+        entities.add(newEntity);
+      }
 
       return Right(entities);
     } catch (e) {

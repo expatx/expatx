@@ -87,10 +87,3 @@ class InvalidInputException extends CustomException {
 class NoCameraException extends CustomException {
   NoCameraException([message]) : super(000, message, 'No Camera Found');
 }
-
-class PlaidAccountException extends CustomException {
-  PlaidAccountException(
-    int errorCode,
-    message,
-  ) : super(errorCode, message, 'Plaid Exception');
-}

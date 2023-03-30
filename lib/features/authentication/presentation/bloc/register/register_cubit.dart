@@ -60,7 +60,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         SignupUserParams(
           firstName: state.firstName,
           lastName: state.lastName,
-          email: state.email,
+          email: state.email.value,
           password: state.password,
         ),
       );

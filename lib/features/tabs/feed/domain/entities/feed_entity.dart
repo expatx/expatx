@@ -3,25 +3,28 @@ import 'package:netigo_front/features/tabs/feed/presentation/model/feed_view_mod
 
 class FeedEntity extends Equatable {
   const FeedEntity({
-    this.id,
-    this.workType,
-    this.expireTime,
-    this.title,
-    this.status,
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.workType,
+    required this.appointmentTime,
+    required this.stage,
   });
 
-  final String? id;
-  final String? workType;
-  final String? expireTime;
-  final String? title;
-  final String? status;
+  final int id;
+  final String title;
+  final String content;
+  final String workType;
+  final String appointmentTime;
+  final String stage;
 
   FeedViewModel toViewModel() {
     return FeedViewModel(
-      title: title!,
-      workType: workType!,
-      expireDate: expireTime!,
-      status: status!,
+      title: title,
+      content: content,
+      workType: workType,
+      appointmentTime: appointmentTime,
+      stage: stage,
     );
   }
 
@@ -29,8 +32,9 @@ class FeedEntity extends Equatable {
   List<Object?> get props => [
         id,
         title,
+        content,
         workType,
-        expireTime,
-        status,
+        appointmentTime,
+        stage,
       ];
 }

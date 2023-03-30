@@ -7,4 +7,8 @@ class ApiEndpoints {
   static const String login = "/login";
   static const String register = "/signup";
   static const String logout = "/logout";
+
+  //Work Orders
+ static String getFeedItems(int userId) => '/users/$userId/work-orders';
+  
 }

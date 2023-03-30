@@ -115,13 +115,12 @@ class RestClient {
   }
 
   Future<Options> _getOptions(PublicOrProtected publicOrProtected) async {
-    final apiToken = await CacheHelperImpl().getAccessToken();
-
     switch (publicOrProtected) {
       case PublicOrProtected.public:
         return PublicApiOptions().options;
       case PublicOrProtected.protected:
-        return ProtectedApiOptions(apiToken).options;
+      String accessToken = await CacheHelperImpl().getAccessToken();
+        return ProtectedApiOptions(accessToken).options;
     }
   }
 
@@ -225,17 +224,17 @@ class PublicApiOptions extends ApiOptions {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    print(super.options.headers);
   }
 }
 
 // Protected API options that need Bearer Token
 class ProtectedApiOptions extends ApiOptions {
-  ProtectedApiOptions(String apiToken) {
+  ProtectedApiOptions(String accessToken) {
+  
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiToken',
+      'Authorization': 'Bearer $accessToken',
     };
   }
 }

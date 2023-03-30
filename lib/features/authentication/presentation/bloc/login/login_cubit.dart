@@ -43,7 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       await _loginUser(
         LoginUserParams(
-          email: state.email,
+          email: state.email.value,
           password: state.password,
         ),
       );

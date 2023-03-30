@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Text("Email: "),
                 const SizedBox(width: 16),
-                Text(user.email.value),
+                Text(user.email),
               ],
             ),
           ),

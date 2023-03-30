@@ -32,7 +32,7 @@ class UserModel {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email.value,
+      email: user.email,
       // password: user.password,
     );
   }
@@ -42,8 +42,33 @@ class UserModel {
       id: id,
       firstName: firstName,
       lastName: lastName,
-      email: Email.dirty(email),
+      email: email,
       // password: password!,
     );
   }
+
+  Map<String, dynamic> toLoginJson() => {
+        "user": {
+          "id": id,
+          "first_name": firstName,
+          "last_name": lastName,
+          "email": email,
+          // "password": password.value,
+        }
+      };
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        // "password": password.value,
+      };
+
+  static const empty = UserModel(
+    id: 0,
+    firstName: "User First",
+    lastName: "User Last",
+    email: "EmptyEmail@email.com",
+  );
 }

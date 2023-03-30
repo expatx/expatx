@@ -76,9 +76,9 @@ class _FeedScreenState extends State<FeedScreen> {
         children: [
           Expanded(child: Text(feedViewModel.title)),
           const Spacer(),
-          Expanded(child: Text(feedViewModel.status)),
+          Expanded(child: Text(feedViewModel.stage)),
           const Spacer(),
-          Expanded(child: Text(feedViewModel.expireDate)),
+          Expanded(child: Text(feedViewModel.workType)),
         ],
       ),
     );

@@ -7,15 +7,17 @@ import 'package:netigo_front/core/error/exceptions.dart';
 import 'package:netigo_front/features/shared/data/models/user_model.dart';
 
 import '../../features/shared/domain/entities/user_entity.dart';
+import '../cache/cache_helper_impl.dart';
 
 abstract class ApiHelper {
   Future<Response> getFinances();
   Future<UserModel> register(
       {required String firstName,
       required String lastName,
-      required Email email,
+      required String email,
       required Password password});
-  Future<UserModel> login({required Email email, required Password password});
+  Future<UserModel> login({required String email, required Password password});
+  Future<List> getFeedItems(int userId);
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -25,19 +27,24 @@ class ApiHelperImpl extends ApiHelper {
 
   @override
   Future<UserModel> login(
-      {required Email email, required Password password}) async {
+      {required String email, required Password password}) async {
     try {
       String body = json.encode({
-        "user": {"email": email.value, "password": password.value}
+        "user": {"email": email, "password": password.value}
       });
       final response = await restClient.post(
         PublicOrProtected.public,
         ApiEndpoints.login,
         body,
       );
+
+        String bearerToken = response.headers.value("authorization")!;
+
+      await CacheHelperImpl().cacheAccessToken(bearerToken);
+
       UserModel userModel = UserModel.fromJson(response.data);
       return userModel;
-    } on CustomException catch (e) {
+    } on FetchDataException catch (e) {
       throw e.errorMessage;
     }
   }
@@ -46,14 +53,14 @@ class ApiHelperImpl extends ApiHelper {
   Future<UserModel> register(
       {required String firstName,
       required String lastName,
-      required Email email,
+      required String email,
       required Password password}) async {
     try {
       String body = json.encode({
         "user": {
           "first_name": firstName,
           "last_name": lastName,
-          "email": email.value,
+          "email": email,
           "password": password.value
         }
       });
@@ -106,5 +113,18 @@ class ApiHelperImpl extends ApiHelper {
         requestOptions: RequestOptions(),
       ),
     );
+  }
+
+   @override
+  Future<List> getFeedItems(int userId) async {
+    try {
+      final response = await restClient.get(
+        PublicOrProtected.protected,
+        ApiEndpoints.getFeedItems(userId),
+      );
+       return response.data;
+    } on CustomException catch (e) {
+      throw e.errorMessage;
+    }
   }
 }

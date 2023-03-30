@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:netigo_front/core/data_helper.dart';
-import 'package:netigo_front/features/authentication/domain/entities/logged_in_user.dart';
 import 'package:netigo_front/features/shared/data/models/user_model.dart';
 
+import '../../../../core/cache/cache_helper_impl.dart';
 import '../../../shared/domain/entities/user_entity.dart';
 
 enum AuthStatus {
@@ -13,26 +13,21 @@ enum AuthStatus {
 
 abstract class AuthDatasource {
   Stream<AuthStatus> get status;
-  Future<LoggedInUser> get loggedInUser;
+  Future<UserEntity> get loggedInUser;
   Future<UserModel> register({
     required String firstName,
     required String lastName,
-    required Email email,
+    required String email,
     required Password password,
   });
   Future<UserModel> login({
-    required Email email,
+    required String email,
     required Password password,
   });
   Future<void> logout();
 }
 
 class AuthDatasourceImpl extends AuthDatasource {
-  // If Cache Client is null then we will create a new instance of CacheClient
-  AuthDatasourceImpl({CacheClient? cache}) : _cache = cache ?? CacheClient();
-
-  final CacheClient _cache;
-  static const userCacheKey = '__user_cache_key';
   final _controller = StreamController<AuthStatus>.broadcast();
   final _dataHelper = DataHelperImpl.instance;
 
@@ -47,26 +42,22 @@ class AuthDatasourceImpl extends AuthDatasource {
   }
 
   @override
-  Future<LoggedInUser> get loggedInUser {
-    return Future.delayed(const Duration(milliseconds: 300), () {
-      // Here we are always just saving one value (User Object) so we can always use the same key
-      return _cache.read(key: userCacheKey) ?? LoggedInUser.empty;
+  Future<UserEntity> get loggedInUser {
+    return Future.delayed(const Duration(milliseconds: 300), () async {
+      UserModel userModel = await CacheHelperImpl().getCurrentUser();
+      return userModel.toEntity();
     });
   }
 
   @override
   Future<UserModel> login({
-    required Email email,
+    required String email,
     required Password password,
   }) async {
     UserModel userModel =
         await _dataHelper.apiHelper.login(email: email, password: password);
-    // _updateLoggedInUser(
-    //   id: userModel.id,
-    //   firstName: userModel.firstName,
-    //   lastName: userModel.lastName,
-    //   email: userModel.email,
-    // );
+
+    _updateLoggedInUser(userModel: userModel);
 
     _controller.add(AuthStatus.authenticated);
 
@@ -79,7 +70,7 @@ class AuthDatasourceImpl extends AuthDatasource {
   Future<UserModel> register(
       {required String firstName,
       required String lastName,
-      required Email email,
+      required String email,
       required Password password}) async {
     // _updateLoggedInUser(
     //   id: loggedInUser.id,
@@ -97,59 +88,24 @@ class AuthDatasourceImpl extends AuthDatasource {
     //Still is unathenticated because a user is not automatically logged in after creating an account
     // Current functionality is to redirect to login screen and input credentials again
     _controller.add(AuthStatus.unauthenticated);
-    print(userModel);
+
     return userModel;
   }
 
   @override
   Future<void> logout() {
-    return Future.delayed(const Duration(milliseconds: 300), () {
-      _cache.write(key: userCacheKey, value: LoggedInUser.empty);
+    return Future.delayed(const Duration(milliseconds: 300), () async {
+      // Clear the current logged in user
+      _updateLoggedInUser(userModel: UserModel.empty);
+      // Clear all Cache
+      await CacheHelperImpl().clearCache();
       _controller.add(AuthStatus.unauthenticated);
     });
   }
 
-  void _updateLoggedInUser({
-    int? id,
-    String? firstName,
-    String? lastName,
-    Email? email,
-  }) {
-    //Take existing value of loggedInUser and save within the cache client
-    LoggedInUser loggedInUser =
-        _cache.read(key: userCacheKey) ?? LoggedInUser.empty;
-
-    // Use copyWith method to update any fields that have been changed
-    _cache.write(
-      key: userCacheKey,
-      value: loggedInUser.copyWith(
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-      ),
-    );
-  }
-}
-
-// Everytime we login we need to save info about our currently logged in user. This is our local datasource.
-
-class CacheClient {
-  CacheClient() : _cache = <String, Object>{};
-
-  //Store the info of our currently logged in user in this map
-  final Map<String, Object> _cache;
-
-  // Add info of our currently logged in user every time they login
-  void write<T extends Object>({required String key, required T value}) {
-    _cache[key] = value;
-  }
-
-  // Take the info of our currently logged in user and use anytime we need it in our app.
-  T? read<T extends Object>({required String key}) {
-    final value = _cache[key];
-    if (value is T) return value;
-    return null;
+  // Cache current user info onto device
+  void _updateLoggedInUser({required UserModel userModel}) {
+    CacheHelperImpl().cacheCurrentUser(userModel);
   }
 }
 

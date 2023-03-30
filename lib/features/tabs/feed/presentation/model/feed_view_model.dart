@@ -1,13 +1,15 @@
 class FeedViewModel {
   FeedViewModel({
     required this.title,
+    required this.content,
     required this.workType,
-    required this.expireDate,
-    required this.status,
+    required this.appointmentTime,
+    required this.stage,
   });
 
   final String title;
-  final String expireDate;
+  final String content;
   final String workType;
-  final String status;
+   final String appointmentTime;
+  final String stage;
 }

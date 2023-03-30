@@ -22,7 +22,7 @@ class RegisterUser implements UseCase<void, SignupUserParams> {
 class SignupUserParams extends Params {
   final String firstName;
   final String lastName;
-  final Email email;
+  final String email;
   final Password password;
 
   SignupUserParams({

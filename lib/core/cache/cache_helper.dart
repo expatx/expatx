@@ -1,5 +1,4 @@
-import 'package:netigo_front/features/authentication/domain/entities/logged_in_user.dart';
-
+import '../../features/shared/data/models/user_model.dart';
 import '../../features/tabs/profile/data/model/profile_model.dart';
 
 abstract class CacheHelper {
@@ -8,5 +7,7 @@ abstract class CacheHelper {
   Future<String> getAccessToken();
   Future<void> cacheAccessToken(String accessToken);
 
-  Future<void> cacheCurrentUser(LoggedInUser userToCache);
+   Future<UserModel> getCurrentUser();
+  Future<void> cacheCurrentUser(UserModel userToCache);
 }
+

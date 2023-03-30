@@ -2,16 +2,16 @@ part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
   final AuthStatus status;
-  final LoggedInUser user;
+  final UserEntity user;
 
   const AuthState._({
     this.status = AuthStatus.unknown,
-    this.user = LoggedInUser.empty,
+    this.user = UserEntity.empty,
   });
 
   const AuthState.unknown() : this._();
 
-  const AuthState.authenticated({required LoggedInUser user})
+  const AuthState.authenticated({required UserEntity user})
       : this._(status: AuthStatus.authenticated, user: user);
 
   const AuthState.unauthenticated()
