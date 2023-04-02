@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
-import 'package:netigo_front/core/cache/cache_helper.dart';
-import 'package:netigo_front/features/shared/data/models/user_model.dart';
-import 'package:netigo_front/features/tabs/profile/data/model/profile_model.dart';
+import 'package:expatx/core/cache/cache_helper.dart';
+import 'package:expatx/features/shared/data/models/user_model.dart';
+import 'package:expatx/features/tabs/profile/data/model/profile_model.dart';
 
 class CacheHelperImpl extends CacheHelper {
   final APICacheManager cacheManager = APICacheManager();
@@ -29,8 +29,8 @@ class CacheHelperImpl extends CacheHelper {
     }
   }
 
-@override
- Future<void> cacheAccessToken(String accessToken) async {
+  @override
+  Future<void> cacheAccessToken(String accessToken) async {
     final apiCacheDBModel = APICacheDBModel(
       key: "access_token",
       syncData: accessToken,
@@ -50,7 +50,7 @@ class CacheHelperImpl extends CacheHelper {
       throw Exception();
     }
   }
-  
+
   @override
   Future<void> cacheCurrentUser(UserModel userToCache) async {
     final apiCacheDBModel = APICacheDBModel(
@@ -75,5 +75,3 @@ class CacheHelperImpl extends CacheHelper {
     await cacheManager.emptyCache();
   }
 }
-
-

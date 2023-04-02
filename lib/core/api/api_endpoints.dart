@@ -1,4 +1,4 @@
-import 'package:netigo_front/core/environment/environment.dart';
+import 'package:expatx/core/environment/environment.dart';
 
 class ApiEndpoints {
   static final String apiBaseUrl = Environment().config.apiBaseUrl;
@@ -9,6 +9,5 @@ class ApiEndpoints {
   static const String logout = "/logout";
 
   //Work Orders
- static String getFeedItems(int userId) => '/users/$userId/work-orders';
-  
+  static String getFeedItems(int userId) => '/users/$userId/work-orders';
 }

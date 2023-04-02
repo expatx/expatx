@@ -1,4 +1,4 @@
-import 'package:netigo_front/features/tabs/feed/domain/entities/feed_entity.dart';
+import 'package:expatx/features/tabs/feed/domain/entities/feed_entity.dart';
 
 class FeedModel extends FeedEntity {
   const FeedModel({

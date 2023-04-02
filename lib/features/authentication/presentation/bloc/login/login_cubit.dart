@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:netigo_front/features/authentication/data/datasources/auth_datasource.dart';
-import 'package:netigo_front/features/authentication/domain/usecases/login_user.dart';
+import 'package:expatx/features/authentication/data/datasources/auth_datasource.dart';
+import 'package:expatx/features/authentication/domain/usecases/login_user.dart';
 import '../../../../shared/domain/entities/user_entity.dart';
 import '../../bloc/login/login_state.dart';
 

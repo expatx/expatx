@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:netigo_front/features/tabs/history/presentation/model/history_view_model.dart';
+import 'package:expatx/features/tabs/history/presentation/model/history_view_model.dart';
 
 class HistoryEntity extends Equatable {
   const HistoryEntity({

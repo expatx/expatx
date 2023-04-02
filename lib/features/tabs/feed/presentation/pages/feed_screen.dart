@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/tabs/feed/domain/entities/feed_entity.dart';
-import 'package:netigo_front/features/tabs/feed/presentation/bloc/feed_bloc.dart';
-import 'package:netigo_front/features/tabs/feed/presentation/model/feed_view_model.dart';
+import 'package:expatx/features/tabs/feed/domain/entities/feed_entity.dart';
+import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
+import 'package:expatx/features/tabs/feed/presentation/model/feed_view_model.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:netigo_front/features/tabs/history/domain/entities/history_entity.dart';
+import 'package:expatx/features/tabs/history/domain/entities/history_entity.dart';
 
 class HistoryModel extends HistoryEntity {
   const HistoryModel({

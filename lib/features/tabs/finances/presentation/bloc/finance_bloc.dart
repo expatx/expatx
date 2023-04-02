@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/tabs/finances/domain/entity/finance_entity.dart';
-import 'package:netigo_front/features/tabs/finances/domain/usecase/get_finance_history.dart';
+import 'package:expatx/features/tabs/finances/domain/entity/finance_entity.dart';
+import 'package:expatx/features/tabs/finances/domain/usecase/get_finance_history.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

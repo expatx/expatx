@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:netigo_front/features/tabs/history/data/datasources/history_datasource.dart';
-import 'package:netigo_front/features/tabs/history/data/models/history_model.dart';
-import 'package:netigo_front/features/tabs/history/domain/entities/history_entity.dart';
-import 'package:netigo_front/features/tabs/history/domain/repositories/history_repository.dart';
+import 'package:expatx/features/tabs/history/data/datasources/history_datasource.dart';
+import 'package:expatx/features/tabs/history/data/models/history_model.dart';
+import 'package:expatx/features/tabs/history/domain/entities/history_entity.dart';
+import 'package:expatx/features/tabs/history/domain/repositories/history_repository.dart';
 
 class HistoryRepositoryImpl implements HistoryRepository {
   final FeedDataSource remoteDataSource;

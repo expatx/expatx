@@ -1,5 +1,5 @@
-import 'package:netigo_front/core/environment/configurations.dart/dev_config.dart';
-import 'package:netigo_front/core/environment/configurations.dart/local_config.dart';
+import 'package:expatx/core/environment/configurations.dart/dev_config.dart';
+import 'package:expatx/core/environment/configurations.dart/local_config.dart';
 
 import 'configurations.dart/base_config.dart';
 import 'configurations.dart/prod_config.dart';

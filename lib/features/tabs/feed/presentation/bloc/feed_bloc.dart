@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/tabs/feed/domain/entities/feed_entity.dart';
-import 'package:netigo_front/features/tabs/feed/domain/usecases/get_feed_history.dart';
+import 'package:expatx/features/tabs/feed/domain/entities/feed_entity.dart';
+import 'package:expatx/features/tabs/feed/domain/usecases/get_feed_history.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

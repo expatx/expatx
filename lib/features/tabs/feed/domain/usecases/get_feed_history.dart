@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:netigo_front/features/tabs/feed/domain/repositories/feed_repository.dart';
-import 'package:netigo_front/features/tabs/feed/domain/entities/feed_entity.dart';
+import 'package:expatx/features/tabs/feed/domain/repositories/feed_repository.dart';
+import 'package:expatx/features/tabs/feed/domain/entities/feed_entity.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

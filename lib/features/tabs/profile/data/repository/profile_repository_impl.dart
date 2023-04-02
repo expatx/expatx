@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:netigo_front/features/tabs/profile/data/datasource/profile_local_datasource.dart';
-import 'package:netigo_front/features/tabs/profile/data/datasource/profile_remote_datasource.dart';
-import 'package:netigo_front/features/tabs/profile/data/model/profile_model.dart';
-import 'package:netigo_front/features/tabs/profile/domain/entity/profile_entity.dart';
-import 'package:netigo_front/features/tabs/profile/domain/repository/profile_repository.dart';
+import 'package:expatx/features/tabs/profile/data/datasource/profile_local_datasource.dart';
+import 'package:expatx/features/tabs/profile/data/datasource/profile_remote_datasource.dart';
+import 'package:expatx/features/tabs/profile/data/model/profile_model.dart';
+import 'package:expatx/features/tabs/profile/domain/entity/profile_entity.dart';
+import 'package:expatx/features/tabs/profile/domain/repository/profile_repository.dart';
 
 import '../../../../../core/network/network_info.dart';
 

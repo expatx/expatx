@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/tabs/finances/domain/entity/finance_entity.dart';
-import 'package:netigo_front/features/tabs/finances/presentation/bloc/finance_bloc.dart';
-import 'package:netigo_front/features/tabs/finances/presentation/model/finance_view_model.dart';
+import 'package:expatx/features/tabs/finances/domain/entity/finance_entity.dart';
+import 'package:expatx/features/tabs/finances/presentation/bloc/finance_bloc.dart';
+import 'package:expatx/features/tabs/finances/presentation/model/finance_view_model.dart';
 
 class FinanceScreen extends StatefulWidget {
   const FinanceScreen({super.key});

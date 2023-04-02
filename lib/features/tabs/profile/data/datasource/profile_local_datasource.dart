@@ -1,5 +1,5 @@
-import 'package:netigo_front/core/cache/cache_helper_impl.dart';
-import 'package:netigo_front/features/tabs/profile/data/model/profile_model.dart';
+import 'package:expatx/core/cache/cache_helper_impl.dart';
+import 'package:expatx/features/tabs/profile/data/model/profile_model.dart';
 
 abstract class ProfileLocalDatasource {
   // Gets the cached ProfileModel which was gotten the last time the user had an internet connection.

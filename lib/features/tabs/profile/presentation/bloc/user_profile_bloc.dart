@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/tabs/profile/domain/entity/profile_entity.dart';
-import 'package:netigo_front/features/tabs/profile/domain/usecase/get_user_profile.dart';
+import 'package:expatx/features/tabs/profile/domain/entity/profile_entity.dart';
+import 'package:expatx/features/tabs/profile/domain/usecase/get_user_profile.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

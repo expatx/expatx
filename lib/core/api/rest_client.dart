@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:netigo_front/core/cache/cache_helper_impl.dart';
+import 'package:expatx/core/cache/cache_helper_impl.dart';
 
 import '../environment/configurations.dart/prod_config.dart';
 import '../environment/environment.dart';
@@ -119,7 +119,7 @@ class RestClient {
       case PublicOrProtected.public:
         return PublicApiOptions().options;
       case PublicOrProtected.protected:
-      String accessToken = await CacheHelperImpl().getAccessToken();
+        String accessToken = await CacheHelperImpl().getAccessToken();
         return ProtectedApiOptions(accessToken).options;
     }
   }
@@ -230,7 +230,6 @@ class PublicApiOptions extends ApiOptions {
 // Protected API options that need Bearer Token
 class ProtectedApiOptions extends ApiOptions {
   ProtectedApiOptions(String accessToken) {
-  
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',

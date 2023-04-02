@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:netigo_front/features/tabs/finances/data/datasource/finance_datasource.dart';
-import 'package:netigo_front/features/tabs/finances/data/model/finance_model.dart';
-import 'package:netigo_front/features/tabs/finances/domain/entity/finance_entity.dart';
-import 'package:netigo_front/features/tabs/finances/domain/repository/finance_repository.dart';
+import 'package:expatx/features/tabs/finances/data/datasource/finance_datasource.dart';
+import 'package:expatx/features/tabs/finances/data/model/finance_model.dart';
+import 'package:expatx/features/tabs/finances/domain/entity/finance_entity.dart';
+import 'package:expatx/features/tabs/finances/domain/repository/finance_repository.dart';
 
 class FinanceRepositoryImpl implements FinanceRepository {
   final FinanceDataSource remoteDataSource;

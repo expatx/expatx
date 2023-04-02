@@ -1,4 +1,4 @@
-import 'package:netigo_front/features/tabs/profile/domain/entity/profile_entity.dart';
+import 'package:expatx/features/tabs/profile/domain/entity/profile_entity.dart';
 
 class ProfileModel extends ProfileEntity {
   const ProfileModel({

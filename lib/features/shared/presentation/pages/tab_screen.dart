@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:netigo_front/core/app_colors.dart';
-import 'package:netigo_front/features/tabs/finances/presentation/pages/finance_screen.dart';
-import 'package:netigo_front/features/tabs/history/presentation/pages/history_screen.dart';
-import 'package:netigo_front/features/tabs/profile/presentation/pages/profile_screen.dart';
+import 'package:expatx/core/app_colors.dart';
+import 'package:expatx/features/tabs/finances/presentation/pages/finance_screen.dart';
+import 'package:expatx/features/tabs/history/presentation/pages/history_screen.dart';
+import 'package:expatx/features/tabs/profile/presentation/pages/profile_screen.dart';
 
 import '../../../tabs/feed/presentation/pages/feed_screen.dart';
 
@@ -116,15 +116,15 @@ class _TabScreenState extends State<TabScreen> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.home),
-        activeColorPrimary: AppColors.netigoBlue,
-        inactiveColorPrimary: AppColors.netigoDarkGrey,
+        activeColorPrimary: AppColors.expatxBlue,
+        inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.history),
         // title: ("History"),
-        activeColorPrimary: AppColors.netigoBlue,
-        inactiveColorPrimary: AppColors.netigoDarkGrey,
+        activeColorPrimary: AppColors.expatxBlue,
+        inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
         // routeAndNavigatorSettings: const RouteAndNavigatorSettings(
         //   initialRoute: "/work",
@@ -133,15 +133,15 @@ class _TabScreenState extends State<TabScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.money_dollar),
         // title: ("Finances"),
-        activeColorPrimary: AppColors.netigoBlue,
-        inactiveColorPrimary: AppColors.netigoDarkGrey,
+        activeColorPrimary: AppColors.expatxBlue,
+        inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.profile_circled),
         // title: ("Profile"),
-        activeColorPrimary: AppColors.netigoBlue,
-        inactiveColorPrimary: AppColors.netigoDarkGrey,
+        activeColorPrimary: AppColors.expatxBlue,
+        inactiveColorPrimary: AppColors.expatxDarkGrey,
         // textStyle: TextStyle()
         iconSize: 40,
       ),

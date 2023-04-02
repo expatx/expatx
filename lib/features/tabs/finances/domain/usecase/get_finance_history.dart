@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:netigo_front/features/tabs/finances/domain/entity/finance_entity.dart';
-import 'package:netigo_front/features/tabs/finances/domain/repository/finance_repository.dart';
+import 'package:expatx/features/tabs/finances/domain/entity/finance_entity.dart';
+import 'package:expatx/features/tabs/finances/domain/repository/finance_repository.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

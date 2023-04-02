@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/shared/domain/entities/user_entity.dart';
+import 'package:expatx/features/shared/domain/entities/user_entity.dart';
 import '../../../../shared/domain/usecases/usecases.dart';
 import '../../../data/datasources/auth_datasource.dart';
 import '../../../domain/usecases/get_auth_status.dart';
