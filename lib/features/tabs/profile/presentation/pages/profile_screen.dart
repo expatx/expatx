@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/auth/auth_bloc.dart';
-import 'package:netigo_front/features/tabs/profile/presentation/bloc/user_profile_bloc.dart';
-import 'package:netigo_front/features/tabs/profile/presentation/widgets/log_out_button.dart';
+import 'package:expatx/features/authentication/presentation/bloc/auth/auth_bloc.dart';
+import 'package:expatx/features/tabs/profile/presentation/bloc/user_profile_bloc.dart';
+import 'package:expatx/features/tabs/profile/presentation/widgets/log_out_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

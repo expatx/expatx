@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netigo_front/core/app_colors.dart';
+import 'package:expatx/core/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: AppColors.netigoBlue,
+          color: AppColors.expatxBlue,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
@@ -45,7 +45,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.netigoBlue, width: 1.0),
+            borderSide: BorderSide(color: AppColors.expatxBlue, width: 1.0),
           ),
           hintText: labelText,
           errorText: errorText,

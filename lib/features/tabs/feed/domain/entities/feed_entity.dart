@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:netigo_front/features/tabs/feed/presentation/model/feed_view_model.dart';
+import 'package:expatx/features/tabs/feed/presentation/model/feed_view_model.dart';
 
 class FeedEntity extends Equatable {
   const FeedEntity({

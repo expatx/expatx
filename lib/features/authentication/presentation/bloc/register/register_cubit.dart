@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:netigo_front/features/authentication/domain/usecases/register_user.dart';
-import 'package:netigo_front/features/authentication/presentation/bloc/register/register_state.dart';
+import 'package:expatx/features/authentication/domain/usecases/register_user.dart';
+import 'package:expatx/features/authentication/presentation/bloc/register/register_state.dart';
 import '../../../../shared/domain/entities/user_entity.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {

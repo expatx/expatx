@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:netigo_front/core/data_helper.dart';
-import 'package:netigo_front/features/shared/data/models/user_model.dart';
+import 'package:expatx/core/data_helper.dart';
+import 'package:expatx/features/shared/data/models/user_model.dart';
 
 import '../../../../core/cache/cache_helper_impl.dart';
 import '../../../shared/domain/entities/user_entity.dart';

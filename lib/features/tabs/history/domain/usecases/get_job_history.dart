@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:netigo_front/features/tabs/history/domain/entities/history_entity.dart';
-import 'package:netigo_front/features/tabs/history/domain/repositories/history_repository.dart';
+import 'package:expatx/features/tabs/history/domain/entities/history_entity.dart';
+import 'package:expatx/features/tabs/history/domain/repositories/history_repository.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

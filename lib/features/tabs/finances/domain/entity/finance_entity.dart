@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:netigo_front/features/tabs/finances/presentation/model/finance_view_model.dart';
+import 'package:expatx/features/tabs/finances/presentation/model/finance_view_model.dart';
 
 class FinanceEntity extends Equatable {
   const FinanceEntity({

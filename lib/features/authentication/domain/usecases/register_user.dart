@@ -1,4 +1,4 @@
-import 'package:netigo_front/features/shared/domain/entities/user_entity.dart';
+import 'package:expatx/features/shared/domain/entities/user_entity.dart';
 
 import '../../../shared/domain/usecases/usecases.dart';
 import '../repositories/auth_repository.dart';

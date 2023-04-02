@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:netigo_front/core/api/api_endpoints.dart';
-import 'package:netigo_front/core/api/rest_client.dart';
-import 'package:netigo_front/core/error/exceptions.dart';
-import 'package:netigo_front/features/shared/data/models/user_model.dart';
+import 'package:expatx/core/api/api_endpoints.dart';
+import 'package:expatx/core/api/rest_client.dart';
+import 'package:expatx/core/error/exceptions.dart';
+import 'package:expatx/features/shared/data/models/user_model.dart';
 
 import '../../features/shared/domain/entities/user_entity.dart';
 import '../cache/cache_helper_impl.dart';
@@ -38,7 +38,7 @@ class ApiHelperImpl extends ApiHelper {
         body,
       );
 
-        String bearerToken = response.headers.value("authorization")!;
+      String bearerToken = response.headers.value("authorization")!;
 
       await CacheHelperImpl().cacheAccessToken(bearerToken);
 
@@ -115,14 +115,14 @@ class ApiHelperImpl extends ApiHelper {
     );
   }
 
-   @override
+  @override
   Future<List> getFeedItems(int userId) async {
     try {
       final response = await restClient.get(
         PublicOrProtected.protected,
         ApiEndpoints.getFeedItems(userId),
       );
-       return response.data;
+      return response.data;
     } on CustomException catch (e) {
       throw e.errorMessage;
     }

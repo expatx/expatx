@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:netigo_front/features/tabs/profile/domain/entity/profile_entity.dart';
-import 'package:netigo_front/features/tabs/profile/domain/repository/profile_repository.dart';
+import 'package:expatx/features/tabs/profile/domain/entity/profile_entity.dart';
+import 'package:expatx/features/tabs/profile/domain/repository/profile_repository.dart';
 
 import '../../../../shared/domain/usecases/usecases.dart';
 

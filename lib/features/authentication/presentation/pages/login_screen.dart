@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:netigo_front/core/app_colors.dart';
+import 'package:expatx/core/app_colors.dart';
 import '../../../shared/presentation/widgets/custom_text_field.dart';
 import '../bloc/login/login_cubit.dart';
 import '../bloc/login/login_state.dart';
@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.netigoDarkGrey,
+      backgroundColor: AppColors.expatxDarkGrey,
       // resizeToAvoidBottomInset: false,
       body: _loginForm(context),
     );
@@ -121,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                     height: 62,
 
                     decoration: BoxDecoration(
-                      color: AppColors.netigoBlue.withOpacity(.75),
+                      color: AppColors.expatxBlue.withOpacity(.75),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -169,7 +169,7 @@ class RegisterRedirect extends StatelessWidget {
           const Text(
             "Don't have an account?",
             style: TextStyle(
-              color: AppColors.netigoLightGrey,
+              color: AppColors.expatxLightGrey,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w700,
               fontSize: 15,
@@ -182,7 +182,7 @@ class RegisterRedirect extends StatelessWidget {
             child: const Text(
               "Register",
               style: TextStyle(
-                color: AppColors.netigoLightGrey,
+                color: AppColors.expatxLightGrey,
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w700,
                 fontSize: 15,

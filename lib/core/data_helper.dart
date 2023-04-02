@@ -1,6 +1,6 @@
-import 'package:netigo_front/core/api/api_endpoints.dart';
-import 'package:netigo_front/core/api/api_helper.dart';
-import 'package:netigo_front/core/cache/cache_helper_impl.dart';
+import 'package:expatx/core/api/api_endpoints.dart';
+import 'package:expatx/core/api/api_helper.dart';
+import 'package:expatx/core/cache/cache_helper_impl.dart';
 
 import 'api/rest_client.dart';
 import 'cache/cache_helper.dart';
