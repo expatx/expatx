@@ -10,8 +10,8 @@ abstract class AuthRepository {
       {required String firstName,
       required String lastName,
       required String email,
-      required Password password});
+      required String password});
   Future<Either<String, UserEntity>> login(
-      {required String email, required Password password});
+      {required String email, required String password});
   Future<void> logout();
 }

@@ -1,4 +1,3 @@
-import '../../../shared/domain/entities/user_entity.dart';
 import '../../../shared/domain/usecases/usecases.dart';
 import '../repositories/auth_repository.dart';
 
@@ -18,7 +17,7 @@ class LoginUser implements UseCase<void, LoginUserParams> {
 
 class LoginUserParams extends Params {
   final String email;
-  final Password password;
+  final String password;
 
   LoginUserParams({
     required this.email,

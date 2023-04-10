@@ -8,14 +8,17 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.textInputType = TextInputType.text,
     this.obscureText = false,
-    this.errorText,
+ 
+    this.validator,
+    this.controller,
   }) : super(key: key);
 
   final String labelText;
   final Function(String)? onChanged;
   final TextInputType textInputType;
   final bool obscureText;
-  final String? errorText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,8 @@ class CustomTextField extends StatelessWidget {
         onChanged: onChanged,
         keyboardType: textInputType,
         obscureText: obscureText,
+        controller: controller,
+        validator: validator,
         style: const TextStyle(
           color: Colors.black,
           fontFamily: "Roboto",
@@ -48,7 +53,6 @@ class CustomTextField extends StatelessWidget {
             borderSide: BorderSide(color: AppColors.expatxBlue, width: 1.0),
           ),
           hintText: labelText,
-          errorText: errorText,
           hintStyle: const TextStyle(
             color: Colors.black,
             fontFamily: "Roboto",

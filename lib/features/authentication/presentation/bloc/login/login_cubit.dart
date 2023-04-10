@@ -1,8 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
-import 'package:expatx/features/authentication/data/datasources/auth_datasource.dart';
 import 'package:expatx/features/authentication/domain/usecases/login_user.dart';
-import '../../../../shared/domain/entities/user_entity.dart';
 import '../../bloc/login/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -14,49 +11,40 @@ class LoginCubit extends Cubit<LoginState> {
         super(LoginState.initial());
 
   void emailChanged(String value) {
-    final email = Email.dirty(value);
+   
     emit(
       state.copyWith(
-        email: email,
-        status: Formz.validate(
-          [email, state.password],
-        ),
+        email: value,
+      
       ),
     );
   }
 
   void passwordChanged(String value) {
-    final password = Password.dirty(value);
+    
     emit(
       state.copyWith(
-        password: password,
-        status: Formz.validate(
-          [state.email, password],
-        ),
+        password: value,
+      
       ),
     );
   }
 
   Future<void> logInWithCredentials() async {
-    if (!state.status.isValidated) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    emit(state.copyWith(status: LoginFormStatus.loading));
     try {
-      await _loginUser(
+      var result = await _loginUser(
         LoginUserParams(
-          email: state.email.value,
+          email: state.email,
           password: state.password,
         ),
       );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on LoginWithUsernameAndPasswordFailure catch (err) {
-      emit(
-        state.copyWith(
-          errorText: err.message,
-          status: FormzStatus.submissionFailure,
-        ),
+      result.fold(
+        (l) => emit(state.copyWith(status: LoginFormStatus.error)),
+        (r) => emit(state.copyWith(status: LoginFormStatus.success)),
       );
     } catch (err) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      emit(state.copyWith(status: LoginFormStatus.error));
     }
   }
 }

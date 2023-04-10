@@ -1,34 +1,33 @@
 import 'package:equatable/equatable.dart';
-import 'package:formz/formz.dart';
 
-import '../../../../shared/domain/entities/user_entity.dart';
+enum LoginFormStatus { initial, loading, success, error }
 
 class LoginState extends Equatable {
-  final Email email;
-  final Password password;
-  final FormzStatus status;
+  final String email;
+  final String password;
+  final LoginFormStatus status;
   final String? errorText;
 
   const LoginState({
-    this.email = const Email.pure(),
-    this.password = const Password.pure(),
-    this.status = FormzStatus.pure,
+    this.email = "email pure",
+    this.password = "password pure",
+    this.status = LoginFormStatus.initial,
     this.errorText,
   });
 
   factory LoginState.initial() {
     return const LoginState(
-      email: Email.pure(),
-      password: Password.pure(),
-      status: FormzStatus.pure,
+      email: "Emailllll",
+      password: "Passworddddd",
+      status: LoginFormStatus.initial,
       errorText: null,
     );
   }
 
   LoginState copyWith({
-    Email? email,
-    Password? password,
-    FormzStatus? status,
+    String? email,
+    String? password,
+    LoginFormStatus? status,
     String? errorText,
   }) {
     return LoginState(

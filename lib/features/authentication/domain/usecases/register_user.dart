@@ -1,5 +1,3 @@
-import 'package:expatx/features/shared/domain/entities/user_entity.dart';
-
 import '../../../shared/domain/usecases/usecases.dart';
 import '../repositories/auth_repository.dart';
 
@@ -23,7 +21,7 @@ class SignupUserParams extends Params {
   final String firstName;
   final String lastName;
   final String email;
-  final Password password;
+  final String password;
 
   SignupUserParams({
     required this.firstName,

@@ -5,8 +5,6 @@ import 'package:expatx/core/api/api_endpoints.dart';
 import 'package:expatx/core/api/rest_client.dart';
 import 'package:expatx/core/error/exceptions.dart';
 import 'package:expatx/features/shared/data/models/user_model.dart';
-
-import '../../features/shared/domain/entities/user_entity.dart';
 import '../cache/cache_helper_impl.dart';
 
 abstract class ApiHelper {
@@ -15,8 +13,8 @@ abstract class ApiHelper {
       {required String firstName,
       required String lastName,
       required String email,
-      required Password password});
-  Future<UserModel> login({required String email, required Password password});
+      required String password});
+  Future<UserModel> login({required String email, required String password});
   Future<List> getFeedItems(int userId);
 }
 
@@ -27,10 +25,10 @@ class ApiHelperImpl extends ApiHelper {
 
   @override
   Future<UserModel> login(
-      {required String email, required Password password}) async {
+      {required String email, required String password}) async {
     try {
       String body = json.encode({
-        "user": {"email": email, "password": password.value}
+        "user": {"email": email, "password": password}
       });
       final response = await restClient.post(
         PublicOrProtected.public,
@@ -54,14 +52,14 @@ class ApiHelperImpl extends ApiHelper {
       {required String firstName,
       required String lastName,
       required String email,
-      required Password password}) async {
+      required String password}) async {
     try {
       String body = json.encode({
         "user": {
           "first_name": firstName,
           "last_name": lastName,
           "email": email,
-          "password": password.value
+          "password": password
         }
       });
       final response = await restClient.post(

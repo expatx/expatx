@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:expatx/features/authentication/domain/usecases/register_user.dart';
 import 'package:expatx/features/authentication/presentation/bloc/register/register_state.dart';
-import '../../../../shared/domain/entities/user_entity.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   final RegisterUser _registerUser;
@@ -11,62 +9,57 @@ class RegisterCubit extends Cubit<RegisterState> {
         super(RegisterState.initial());
 
   void firstNameChanged(String value) {
-    final firstName = value;
     emit(
       state.copyWith(
-        firstName: firstName,
+        firstName: value,
       ),
     );
   }
 
   void lastNameChanged(String value) {
-    final lastName = value;
+
     emit(
       state.copyWith(
-        lastName: lastName,
+        lastName: value,
       ),
     );
   }
 
   void emailChanged(String value) {
-    final email = Email.dirty(value);
     emit(
       state.copyWith(
-        email: email,
-        status: Formz.validate(
-          [email, state.password],
-        ),
+        email: value,
       ),
     );
   }
 
   void passwordChanged(String value) {
-    final password = Password.dirty(value);
+
     emit(
       state.copyWith(
-        password: password,
-        status: Formz.validate(
-          [state.email, password],
-        ),
+        password: value,
       ),
     );
   }
 
   Future<void> signupWithCredentials() async {
-    if (!state.status.isValidated) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    emit(state.copyWith(status: RegisterFormStatus.loading));
     try {
-      await _registerUser(
+      var response = await _registerUser(
         SignupUserParams(
           firstName: state.firstName,
           lastName: state.lastName,
-          email: state.email.value,
+          email: state.email,
           password: state.password,
         ),
       );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      response.fold((l){
+        emit(state.copyWith(status: RegisterFormStatus.error));
+      }, (r){
+        emit(state.copyWith(status: RegisterFormStatus.success));
+      });
     } catch (err) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      emit(state.copyWith(status: RegisterFormStatus.error));
     }
   }
 }

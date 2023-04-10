@@ -1,22 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:formz/formz.dart';
 
-import '../../../../shared/domain/entities/user_entity.dart';
+enum RegisterFormStatus { initial, loading, success, error }
 
 class RegisterState extends Equatable {
   final String firstName;
   final String lastName;
-  final Email email;
-  final Password password;
-  final FormzStatus status;
+  final String email;
+  final String password;
+  final RegisterFormStatus status;
   final String? errorText;
 
   const RegisterState({
     this.firstName = '',
     this.lastName = '',
-    this.email = const Email.pure(),
-    this.password = const Password.pure(),
-    this.status = FormzStatus.pure,
+    this.email = '',
+    this.password = '',
+    this.status = RegisterFormStatus.initial,
     this.errorText,
   });
 
@@ -24,9 +23,9 @@ class RegisterState extends Equatable {
     return const RegisterState(
       firstName: "",
       lastName: "",
-      email: Email.pure(),
-      password: Password.pure(),
-      status: FormzStatus.pure,
+      email: "",
+      password: "",
+      status: RegisterFormStatus.initial,
       errorText: null,
     );
   }
@@ -34,9 +33,9 @@ class RegisterState extends Equatable {
   RegisterState copyWith({
     String? firstName,
     String? lastName,
-    Email? email,
-    Password? password,
-    FormzStatus? status,
+    String? email,
+    String? password,
+    RegisterFormStatus? status,
     String? errorText,
   }) {
     return RegisterState(

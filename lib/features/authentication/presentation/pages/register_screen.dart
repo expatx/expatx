@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expatx/core/app_colors.dart';
 import '../../../shared/presentation/widgets/custom_text_field.dart';
 import '../bloc/register/register_cubit.dart';
 import '../bloc/register/register_state.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  //Form Controller and Keys
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  //Error Messages
+  String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.expatxDarkGrey,
-      body: _registerForm(context),
+      body: Form(key: _formKey, child: _registerForm(context)),
     );
   }
 
@@ -67,9 +81,11 @@ class RegisterScreen extends StatelessWidget {
           child: CustomTextField(
             labelText: 'First Name',
             textInputType: TextInputType.name,
+            controller: _firstNameController,
             onChanged: (value) {
               context.read<RegisterCubit>().firstNameChanged(value);
             },
+            validator: (value) => value!.isEmpty ? 'Cannot be blank' : null,
           ),
         );
       },
@@ -86,6 +102,8 @@ class RegisterScreen extends StatelessWidget {
           child: CustomTextField(
             labelText: 'Last Name',
             textInputType: TextInputType.name,
+            controller: _lastNameController,
+            validator: (value) => value!.isEmpty ? 'Cannot be blank' : null,
             onChanged: (value) {
               context.read<RegisterCubit>().lastNameChanged(value);
             },
@@ -102,10 +120,25 @@ class RegisterScreen extends StatelessWidget {
         return Align(
           child: CustomTextField(
             labelText: 'Email',
-            errorText: state.email.invalid ? "Invalid Email" : null,
             textInputType: TextInputType.emailAddress,
             onChanged: (value) {
               context.read<RegisterCubit>().emailChanged(value);
+            },
+            controller: _emailController,
+            validator: (value) {
+              RegExp regex = RegExp(
+                  r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+                  r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+                  r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+                  r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+                  r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+                  r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+                  r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])');
+              if (!regex.hasMatch(value!)) {
+                return 'Please enter a valid email address';
+              } else {
+                return null;
+              }
             },
           ),
         );
@@ -123,10 +156,21 @@ class RegisterScreen extends StatelessWidget {
           child: CustomTextField(
             labelText: 'Password',
             obscureText: true,
-            errorText: state.password.invalid ? "Invalid Password" : null,
             textInputType: TextInputType.text,
             onChanged: (value) {
               context.read<RegisterCubit>().passwordChanged(value);
+            },
+            controller: _passwordController,
+            validator: (value) {
+              RegExp regex = RegExp(
+                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+              if (!regex.hasMatch(value!)) {
+                errorMessage =
+                    'Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character';
+                return 'Please enter a valid password';
+              } else {
+                return null;
+              }
             },
           ),
         );
@@ -140,22 +184,65 @@ class RegisterScreen extends StatelessWidget {
       child: BlocBuilder<RegisterCubit, RegisterState>(
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {
-          return state.status == FormzStatus.submissionInProgress
+          return state.status == RegisterFormStatus.loading
               ? const CircularProgressIndicator()
               : InkWell(
-                  onTap: () {
-                    if (state.status == FormzStatus.valid) {
-                      context.read<RegisterCubit>().signupWithCredentials();
-                      context.pop();
+                  onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await context
+                          .read<RegisterCubit>()
+                          .signupWithCredentials();
+                      if (context.mounted) {
+                        if (context.read<RegisterCubit>().state.status ==
+                            RegisterFormStatus.success) {
+                          context.pop();
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Registration Failed',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                            'Check your inputs: ${state.status}',
-                          ),
+                          content: errorMessage == ''
+                              ? const Text(
+                                  'Check your inputs',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                )
+                              : Text(
+                                  errorMessage!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                         ),
                       );
                     }
+                    errorMessage = '';
                   },
                   child: Container(
                     //Type TextField
@@ -185,11 +272,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void _showSnackBar(BuildContext context, String message) {
-  //   final snackBar = SnackBar(content: Text(message));
-  //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  // }
 }
 
 class LoginRedirect extends StatelessWidget {

@@ -18,11 +18,11 @@ abstract class AuthDatasource {
     required String firstName,
     required String lastName,
     required String email,
-    required Password password,
+    required String password,
   });
   Future<UserModel> login({
     required String email,
-    required Password password,
+    required String password,
   });
   Future<void> logout();
 }
@@ -52,7 +52,7 @@ class AuthDatasourceImpl extends AuthDatasource {
   @override
   Future<UserModel> login({
     required String email,
-    required Password password,
+    required String password,
   }) async {
     UserModel userModel =
         await _dataHelper.apiHelper.login(email: email, password: password);
@@ -71,13 +71,7 @@ class AuthDatasourceImpl extends AuthDatasource {
       {required String firstName,
       required String lastName,
       required String email,
-      required Password password}) async {
-    // _updateLoggedInUser(
-    //   id: loggedInUser.id,
-    //   firstName: loggedInUser.firstName,
-    //   lastName: loggedInUser.lastName,
-    //   email: loggedInUser.email,
-    // );
+      required String password}) async {
 
     UserModel userModel = await _dataHelper.apiHelper.register(
         firstName: firstName,

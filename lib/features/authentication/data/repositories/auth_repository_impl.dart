@@ -19,7 +19,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<String, UserEntity>> login({
     required String email,
-    required Password password,
+    required String password,
   }) async {
     try {
       UserModel userModel =
@@ -36,7 +36,7 @@ class AuthRepositoryImpl extends AuthRepository {
       {required String firstName,
       required String lastName,
       required String email,
-      required Password password}) async {
+      required String password}) async {
     try {
       UserModel userModel = await authDatasource.register(
           firstName: firstName,
