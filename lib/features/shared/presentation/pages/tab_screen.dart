@@ -116,14 +116,14 @@ class _TabScreenState extends State<TabScreen> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.home),
-        activeColorPrimary: AppColors.expatxBlue,
+        activeColorPrimary: AppColors.expatxPurple,
         inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.history),
         // title: ("History"),
-        activeColorPrimary: AppColors.expatxBlue,
+        activeColorPrimary: AppColors.expatxPurple,
         inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
         // routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -133,14 +133,14 @@ class _TabScreenState extends State<TabScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.money_dollar),
         // title: ("Finances"),
-        activeColorPrimary: AppColors.expatxBlue,
+        activeColorPrimary: AppColors.expatxPurple,
         inactiveColorPrimary: AppColors.expatxDarkGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.profile_circled),
         // title: ("Profile"),
-        activeColorPrimary: AppColors.expatxBlue,
+        activeColorPrimary: AppColors.expatxPurple,
         inactiveColorPrimary: AppColors.expatxDarkGrey,
         // textStyle: TextStyle()
         iconSize: 40,

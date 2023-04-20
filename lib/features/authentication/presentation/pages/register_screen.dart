@@ -27,46 +27,68 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.expatxDarkGrey,
       body: Form(key: _formKey, child: _registerForm(context)),
     );
   }
 
   Widget _registerForm(BuildContext context) {
-    return SingleChildScrollView(
-      reverse: true,
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(
-              top: 130,
-              bottom: 0,
+    return Container(
+      height: double.infinity,
+      padding: const EdgeInsets.only(
+        bottom: 150,
+      ),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            // Color.fromARGB(255, 25, 178, 238),
+            // Color.fromARGB(255, 21, 236, 229),
+            Colors.white,
+            Color.fromARGB(255, 73, 69, 84),
+          ],
+        ),
+      ),
+      child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                top: 150,
+                bottom: 50,
+              ),
+              child: const Text(
+                "Register",
+                style: TextStyle(
+                  color: AppColors.expatxBlack,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Poppins",
+                ),
+              ),
+            ) //
+            ,
+            _firstNameField(context),
+            const SizedBox(
+              height: 20,
             ),
-
-            child: Image.asset(
-              'assets/images/netigo_logo_blue.png',
-              width: MediaQuery.of(context).size.width * .9,
-            ), //
-          ),
-          _firstNameField(context),
-          const SizedBox(
-            height: 20,
-          ),
-          _lastNameField(context),
-          const SizedBox(
-            height: 20,
-          ),
-          _emailField(context),
-          const SizedBox(
-            height: 20,
-          ),
-          _passwordField(context),
-          const SizedBox(
-            height: 40,
-          ),
-          _registerButton(context),
-          const LoginRedirect(),
-        ],
+            _lastNameField(context),
+            const SizedBox(
+              height: 20,
+            ),
+            _emailField(context),
+            const SizedBox(
+              height: 20,
+            ),
+            _passwordField(context),
+            const SizedBox(
+              height: 40,
+            ),
+            _registerButton(context),
+            const LoginRedirect(),
+          ],
+        ),
       ),
     );
   }
@@ -162,11 +184,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
             controller: _passwordController,
             validator: (value) {
-              RegExp regex = RegExp(
-                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+              RegExp regex =
+                  RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$');
               if (!regex.hasMatch(value!)) {
                 errorMessage =
-                    'Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character';
+                    'Password must contain at least 6 characters, 1 uppercase,1 lowercase, and 1 number';
                 return 'Please enter a valid password';
               } else {
                 return null;
@@ -206,7 +228,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontFamily: "Roboto",
+                                  fontFamily: "Poppins",
                                   fontWeight: FontWeight.w500,
                                 ),
                                 textAlign: TextAlign.center,
@@ -224,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
-                                    fontFamily: "Roboto",
+                                    fontFamily: "Poppins",
                                     fontWeight: FontWeight.w500,
                                   ),
                                   textAlign: TextAlign.center,
@@ -234,7 +256,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
-                                    fontFamily: "Roboto",
+                                    fontFamily: "Poppins",
                                     fontWeight: FontWeight.w500,
                                   ),
                                   textAlign: TextAlign.center,
@@ -250,7 +272,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 62,
 
                     decoration: BoxDecoration(
-                      color: AppColors.expatxBlue.withOpacity(.75),
+                      color: AppColors.expatxPurple.withOpacity(.5),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -261,7 +283,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
-                          fontFamily: "Roboto",
+                          letterSpacing: 1.5,
+                          fontFamily: "Poppins",
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -294,7 +317,7 @@ class LoginRedirect extends StatelessWidget {
             "Already have an account?",
             style: TextStyle(
               color: AppColors.expatxLightGrey,
-              fontFamily: "Roboto",
+              fontFamily: "Poppins",
               fontWeight: FontWeight.w700,
               fontSize: 15,
             ),
@@ -307,7 +330,7 @@ class LoginRedirect extends StatelessWidget {
               "Login",
               style: TextStyle(
                 color: AppColors.expatxLightGrey,
-                fontFamily: "Roboto",
+                fontFamily: "Poppins",
                 fontWeight: FontWeight.w700,
                 fontSize: 15,
                 decoration: TextDecoration.underline,

@@ -8,7 +8,6 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.textInputType = TextInputType.text,
     this.obscureText = false,
- 
     this.validator,
     this.controller,
   }) : super(key: key);
@@ -24,11 +23,11 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * .8,
-      height: 60,
+      height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: AppColors.expatxBlue,
+          color: AppColors.expatxPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
@@ -43,22 +42,65 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         style: const TextStyle(
           color: Colors.black,
-          fontFamily: "Roboto",
-          fontWeight: FontWeight.w500,
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w400,
           fontSize: 20,
         ),
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(
+              // top: 20,
+              // bottom: 20,
+              ),
+          // helperText: 'hello',
+          // isCollapsed: false,
+          // errorBorder: const OutlineInputBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(10),
+          //   ),
+          //   borderSide: BorderSide(
+          //     color: Colors.yellow,
+          //     width: 2.0,
+          //   ),
+          // ),
+          // focusedErrorBorder: const OutlineInputBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(10),
+          //   ),
+          //   borderSide: BorderSide(
+          //     color: AppColors.expatxPurple,
+          //     width: 2.0,
+          //   ),
+          // ),
+          // filled: true,
+          // fillColor: AppColors.expatxFadedColor,
           border: InputBorder.none,
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.expatxBlue, width: 1.0),
-          ),
+
+          // const OutlineInputBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(10),
+          //   ),
+          //   borderSide: BorderSide(
+          //     color: AppColors.expatxPurple,
+          //     width: 2.0,
+          //   ),
+          // ),
+          // focusedBorder: const OutlineInputBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(10),
+          //   ),
+          //   borderSide: BorderSide(
+          //     color: AppColors.expatxPurple,
+          //     width: 2.0,
+          //   ),
+          // ),
           hintText: labelText,
           hintStyle: const TextStyle(
-            color: Colors.black,
-            fontFamily: "Roboto",
-            fontWeight: FontWeight.w400,
+            color: AppColors.expatxBlack,
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w500,
             fontSize: 20,
           ),
+          // errorStyle: const TextStyle(fontSize: 0.01),
         ),
       ),
     );
