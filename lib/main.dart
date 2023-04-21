@@ -5,7 +5,7 @@ import 'package:expatx/core/environment/environment.dart';
 import 'package:expatx/core/network/network_info.dart';
 import 'package:expatx/features/tabs/feed/data/datasources/feed_datasource.dart';
 import 'package:expatx/features/tabs/feed/data/repositories/feed_repository_impl.dart';
-import 'package:expatx/features/tabs/feed/domain/usecases/get_feed_history.dart';
+import 'package:expatx/features/tabs/feed/domain/usecases/get_feed.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
 import 'package:expatx/features/tabs/finances/data/datasource/finance_datasource.dart';
 import 'package:expatx/features/tabs/finances/data/repository/finance_repository_impl.dart';
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FeedBloc(
-              getFeedHistory: GetFeedHistory(
+              getFeed: GetFeed(
                 repository: FeedRepositoryImpl(
                   remoteDataSource: FeedDataSourceImpl(),
                 ),

@@ -15,7 +15,7 @@ abstract class ApiHelper {
       required String email,
       required String password});
   Future<UserModel> login({required String email, required String password});
-  Future<List> getFeedItems(int userId);
+  Future<List> getFeedItems();
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -114,15 +114,15 @@ class ApiHelperImpl extends ApiHelper {
   }
 
   @override
-  Future<List> getFeedItems(int userId) async {
+  Future<List> getFeedItems() async {
     try {
       final response = await restClient.get(
         PublicOrProtected.protected,
-        ApiEndpoints.getFeedItems(userId),
+        ApiEndpoints.getFeedItems,
       );
       return response.data;
-    } on CustomException catch (e) {
-      throw e.errorMessage;
+    } catch (e) {
+      return [];
     }
   }
 }

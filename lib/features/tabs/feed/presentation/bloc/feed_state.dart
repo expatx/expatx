@@ -10,7 +10,7 @@ class FeedInitial extends FeedState {}
 class FeedLoading extends FeedState {}
 
 class FeedSuccess extends FeedState {
-  final List<FeedEntity> feedEntity;
+  final List<FeedPostEntity> feedEntity;
 
   FeedSuccess({required this.feedEntity});
 }

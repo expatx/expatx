@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:expatx/features/tabs/feed/domain/entities/feed_entity.dart';
+import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
-import 'package:expatx/features/tabs/feed/presentation/model/feed_view_model.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -31,6 +30,11 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CircularProgressIndicator(),
             );
           } else if (state is FeedSuccess) {
+            if (state.feedEntity.isEmpty) {
+              return const Center(
+                child: Text("No Feed Info!"),
+              );
+            }
             return _buildJobCard(state.feedEntity);
           } else if (state is FeedFailure) {
             return Center(
@@ -46,18 +50,18 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _buildJobCard(List<FeedEntity> feedEntity) {
+  Widget _buildJobCard(List<FeedPostEntity> feedEntity) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: feedEntity.length,
         itemBuilder: (context, index) {
           return jobDetails(
-            feedEntity[index].toViewModel(),
+            feedEntity[index],
           );
         });
   }
 
-  Widget jobDetails(FeedViewModel feedViewModel) {
+  Widget jobDetails(FeedPostEntity feedPostEntity) {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -74,11 +78,11 @@ class _FeedScreenState extends State<FeedScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: Text(feedViewModel.title)),
+          Expanded(child: Text(feedPostEntity.content)),
           const Spacer(),
-          Expanded(child: Text(feedViewModel.stage)),
+          Expanded(child: Text(feedPostEntity.id.toString())),
           const Spacer(),
-          Expanded(child: Text(feedViewModel.workType)),
+          Expanded(child: Text(feedPostEntity.createdAt)),
         ],
       ),
     );

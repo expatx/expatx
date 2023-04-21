@@ -233,7 +233,7 @@ class ProtectedApiOptions extends ApiOptions {
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken',
+      'Authorization': accessToken,
     };
   }
 }
