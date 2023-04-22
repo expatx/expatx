@@ -1,4 +1,5 @@
 import 'package:expatx/core/app_colors.dart';
+import 'package:expatx/features/shared/presentation/widgets/create_post_language_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class CreatePostScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              if(_postController.text != ""){
+              if (_postController.text != "") {
                 Navigator.pop(context, _postController.text);
               }
             },
@@ -78,35 +79,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   const SizedBox(
                     width: 40,
                   ),
-                  Container(
-                    height: 42,
-                    width: 235,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(21),
-                      color: AppColors.expatxPurple,
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            "What language is this?",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Roboto",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const CreatePostLanguageDropdown(),
                 ],
               ),
             ),
@@ -139,39 +112,40 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   fontSize: 20,
                 ),
                 decoration: InputDecoration(
-                    isDense: true,
-                    filled: true,
-                    fillColor: Colors.white,
-                    // contentPadding: const EdgeInsets.symmetric(
-                    //   horizontal: 10,
-                    //   vertical: 10,
-                    // ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      borderSide: BorderSide.none,
+                  isDense: true,
+                  filled: true,
+                  fillColor: Colors.white,
+                  // contentPadding: const EdgeInsets.symmetric(
+                  //   horizontal: 10,
+                  //   vertical: 10,
+                  // ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
                     ),
-                    hintText: "What's happening?",
-                    hintStyle: const TextStyle(
-                      color: AppColors.expatxBlack,
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                    suffixIcon: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                            icon: const Icon(
-                              Icons.add_photo_alternate_outlined,
-                              color: AppColors.expatxPurple,
-                              size: 35,
-                            ),
-                            onPressed: () {}),
-                      ],
-                    )),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: "What's happening?",
+                  hintStyle: const TextStyle(
+                    color: AppColors.expatxBlack,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                  suffixIcon: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          icon: const Icon(
+                            Icons.add_photo_alternate_outlined,
+                            color: AppColors.expatxPurple,
+                            size: 35,
+                          ),
+                          onPressed: () {}),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
