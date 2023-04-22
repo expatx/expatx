@@ -1,7 +1,9 @@
+import 'package:expatx/core/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -23,6 +25,7 @@ class _FeedScreenState extends State<FeedScreen> {
       appBar: AppBar(
         title: const Text("Feed"),
       ),
+      floatingActionButton: const FeedFloatingAction(),
       body: BlocBuilder<FeedBloc, FeedState>(
         builder: (context, state) {
           if (state is FeedLoading) {
@@ -84,6 +87,26 @@ class _FeedScreenState extends State<FeedScreen> {
           const Spacer(),
           Expanded(child: Text(feedPostEntity.createdAt)),
         ],
+      ),
+    );
+  }
+}
+
+class FeedFloatingAction extends StatelessWidget {
+  const FeedFloatingAction({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        GoRouter.of(context).goNamed("create_post");
+      },
+      backgroundColor: AppColors.expatxPurple,
+      child: const Icon(
+        Icons.add,
+        size: 30,
       ),
     );
   }

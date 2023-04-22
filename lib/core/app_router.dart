@@ -6,6 +6,7 @@ import '../features/authentication/data/datasources/auth_datasource.dart';
 import '../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../features/authentication/presentation/pages/login_screen.dart';
 import '../features/authentication/presentation/pages/register_screen.dart';
+import '../features/shared/presentation/pages/create_post_screen.dart';
 import '../features/shared/presentation/pages/tab_screen.dart';
 
 class AppRouter {
@@ -21,6 +22,15 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const TabScreen();
         },
+        routes: [
+          GoRoute(
+            name: 'create_post',
+            path: 'create_post',
+            builder: (BuildContext context, GoRouterState state) {
+              return const CreatePostScreen();
+            },
+          ),
+        ]
       ),
       GoRoute(
         name: 'login',
