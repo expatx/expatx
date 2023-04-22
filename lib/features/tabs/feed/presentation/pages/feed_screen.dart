@@ -1,4 +1,5 @@
 import 'package:expatx/core/app_colors.dart';
+import 'package:expatx/features/tabs/feed/presentation/widgets/feed_post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
@@ -23,9 +24,42 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Feed"),
+        backgroundColor: Colors.white,
+        title: const Text(
+          "Medellin, CO",
+          style: TextStyle(
+            color: AppColors.expatxBlack,
+            fontFamily: "Poppins",
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: Container(
+          padding: const EdgeInsets.only(left: 10),
+          height: 40,
+          width: 40,
+          child: ClipOval(
+            child: Image.asset("assets/images/user_profile.png"),
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: Icon(Icons.filter_alt_outlined,
+                color: AppColors.expatxDarkGrey, size: 35),
+          ),
+        ],
       ),
-      floatingActionButton: const FeedFloatingAction(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          GoRouter.of(context).goNamed("create_post");
+        },
+        backgroundColor: AppColors.expatxPurple,
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
+      ),
       body: BlocBuilder<FeedBloc, FeedState>(
         builder: (context, state) {
           if (state is FeedLoading) {
@@ -38,7 +72,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 child: Text("No Feed Info!"),
               );
             }
-            return _buildJobCard(state.feedEntity);
+            return _buildFeedPost(state.feedEntity);
           } else if (state is FeedFailure) {
             return Center(
               child: Text(state.errorMessage),
@@ -53,61 +87,13 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _buildJobCard(List<FeedPostEntity> feedEntity) {
+  Widget _buildFeedPost(List<FeedPostEntity> feedEntity) {
     return ListView.builder(
-        shrinkWrap: true,
-        itemCount: feedEntity.length,
-        itemBuilder: (context, index) {
-          return jobDetails(
-            feedEntity[index],
-          );
-        });
-  }
-
-  Widget jobDetails(FeedPostEntity feedPostEntity) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 2.0),
-            blurRadius: 5.0,
-          ),
-        ],
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(child: Text(feedPostEntity.content)),
-          const Spacer(),
-          Expanded(child: Text(feedPostEntity.language)),
-          const Spacer(),
-          Expanded(child: Text(feedPostEntity.userId.toString())),
-        ],
-      ),
-    );
-  }
-}
-
-class FeedFloatingAction extends StatelessWidget {
-  const FeedFloatingAction({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        GoRouter.of(context).goNamed("create_post");
+      shrinkWrap: true,
+      itemCount: feedEntity.length,
+      itemBuilder: (context, index) {
+        return FeedPostWidget(feedPostEntity: feedEntity[index]);
       },
-      backgroundColor: AppColors.expatxPurple,
-      child: const Icon(
-        Icons.add,
-        size: 30,
-      ),
     );
   }
 }

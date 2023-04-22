@@ -85,7 +85,7 @@ class _TabScreenState extends State<TabScreen> {
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+        colorBehindNavBar: AppColors.expatxFadedColor,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -117,14 +117,14 @@ class _TabScreenState extends State<TabScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.home),
         activeColorPrimary: AppColors.expatxPurple,
-        inactiveColorPrimary: AppColors.expatxDarkGrey,
+        inactiveColorPrimary: AppColors.expatxMediumGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.history),
         // title: ("History"),
         activeColorPrimary: AppColors.expatxPurple,
-        inactiveColorPrimary: AppColors.expatxDarkGrey,
+        inactiveColorPrimary: AppColors.expatxMediumGrey,
         iconSize: 40,
         // routeAndNavigatorSettings: const RouteAndNavigatorSettings(
         //   initialRoute: "/work",
@@ -134,14 +134,14 @@ class _TabScreenState extends State<TabScreen> {
         icon: const Icon(CupertinoIcons.money_dollar),
         // title: ("Finances"),
         activeColorPrimary: AppColors.expatxPurple,
-        inactiveColorPrimary: AppColors.expatxDarkGrey,
+        inactiveColorPrimary: AppColors.expatxMediumGrey,
         iconSize: 40,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.profile_circled),
         // title: ("Profile"),
         activeColorPrimary: AppColors.expatxPurple,
-        inactiveColorPrimary: AppColors.expatxDarkGrey,
+        inactiveColorPrimary: AppColors.expatxMediumGrey,
         // textStyle: TextStyle()
         iconSize: 40,
       ),

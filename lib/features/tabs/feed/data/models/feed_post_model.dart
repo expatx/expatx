@@ -1,3 +1,4 @@
+import 'package:expatx/features/shared/data/models/user_model.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 
 import 'feed_post_comment_model.dart';
@@ -7,7 +8,7 @@ class FeedPostModel extends FeedPostEntity {
     required super.id,
     required super.content,
     required super.language,
-    required super.userId,
+    required super.userEntity,
     required super.createdAt,
     required super.comments,
   });
@@ -16,8 +17,8 @@ class FeedPostModel extends FeedPostEntity {
         id: json["id"],
         content: json["content"],
         language: json["language"],
-        userId: json["user_id"],
         createdAt: json["created_at"],
+        userEntity: UserModel.fromJson(json["user"]).toEntity(),
         comments: json["comments"] == null
             ? null
             : List<FeedPostCommentModel>.from(
@@ -28,7 +29,7 @@ class FeedPostModel extends FeedPostEntity {
         id: id,
         content: content,
         language: language,
-        userId: userId,
+        userEntity: userEntity,
         createdAt: createdAt,
         comments: comments,
       );
