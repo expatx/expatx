@@ -6,6 +6,7 @@ class FeedPostModel extends FeedPostEntity {
   const FeedPostModel({
     required super.id,
     required super.content,
+    required super.language,
     required super.userId,
     required super.createdAt,
     required super.comments,
@@ -14,6 +15,7 @@ class FeedPostModel extends FeedPostEntity {
   factory FeedPostModel.fromJson(Map<String, dynamic> json) => FeedPostModel(
         id: json["id"],
         content: json["content"],
+        language: json["language"],
         userId: json["user_id"],
         createdAt: json["created_at"],
         comments: json["comments"] == null
@@ -25,6 +27,7 @@ class FeedPostModel extends FeedPostEntity {
   FeedPostEntity toEntity() => FeedPostEntity(
         id: id,
         content: content,
+        language: language,
         userId: userId,
         createdAt: createdAt,
         comments: comments,

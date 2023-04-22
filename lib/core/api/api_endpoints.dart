@@ -9,5 +9,5 @@ class ApiEndpoints {
   static const String logout = "/logout";
 
   //Work Orders
-  static String getFeedItems = '/feed-posts';
+  static String feedPosts = '/feed-posts';
 }

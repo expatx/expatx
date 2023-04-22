@@ -1,6 +1,14 @@
 import 'package:expatx/core/app_colors.dart';
+import 'package:expatx/features/shared/presentation/bloc/create_post/create_post_bloc.dart';
+import 'package:expatx/features/shared/presentation/bloc/create_post/create_post_state.dart';
 import 'package:expatx/features/shared/presentation/widgets/create_post_language_dropdown.dart';
+import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../authentication/presentation/bloc/auth/auth_bloc.dart';
+import '../../data/models/create_post_model.dart';
+import '../bloc/create_post/create_post_event.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
@@ -10,7 +18,19 @@ class CreatePostScreen extends StatefulWidget {
 }
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
-  final TextEditingController _postController = TextEditingController();
+  final TextEditingController _postTextController = TextEditingController();
+
+  createPostSubmit() {
+    BlocProvider.of<CreatePostBloc>(context).add(
+      CreatePostSubmit(
+        createPostModel: CreatePostModel(
+          content: _postTextController.text,
+          language: "English",
+          userId: context.read<AuthBloc>().state.user.id,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +59,33 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           //replace with our own icon data.
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              if (_postController.text != "") {
-                Navigator.pop(context, _postController.text);
+          BlocBuilder<CreatePostBloc, CreatePostState>(
+            builder: (context, state) {
+              if (state is CreatePostLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return TextButton(
+                  onPressed: () {
+                    createPostSubmit();
+                    if (state is CreatePostSuccess) {
+                      Navigator.pop(context);
+                    }
+                    BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
+                  },
+                  child: const Text(
+                    "Post",
+                    style: TextStyle(
+                      color: AppColors.expatxPurple,
+                      fontFamily: "Roboto",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                );
               }
             },
-            child: const Text(
-              "Post",
-              style: TextStyle(
-                color: AppColors.expatxPurple,
-                fontFamily: "Roboto",
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
           ),
         ],
       ),
@@ -96,9 +128,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 textAlignVertical: TextAlignVertical.top,
                 expands: true,
                 maxLines: null,
-                onChanged: (val) {},
+                onChanged: (val) {
+                  _postTextController.text = val;
+                },
                 keyboardType: TextInputType.multiline,
-                controller: _postController,
+                controller: _postTextController,
                 // validator: (val) {
                 //   if (val!.isEmpty) {
                 //     return 'Please enter some text';

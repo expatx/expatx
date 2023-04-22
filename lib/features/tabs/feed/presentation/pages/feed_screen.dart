@@ -81,7 +81,7 @@ class _FeedScreenState extends State<FeedScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: Text(feedPostEntity.comments![0].comment)),
+          Expanded(child: Text(feedPostEntity.language)),
           const Spacer(),
           Expanded(child: Text(feedPostEntity.id.toString())),
           const Spacer(),

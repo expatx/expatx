@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:expatx/core/api/api_endpoints.dart';
 import 'package:expatx/core/api/rest_client.dart';
 import 'package:expatx/core/error/exceptions.dart';
+import 'package:expatx/features/shared/data/models/create_post_model.dart';
 import 'package:expatx/features/shared/data/models/user_model.dart';
 import '../cache/cache_helper_impl.dart';
 
@@ -16,6 +17,7 @@ abstract class ApiHelper {
       required String password});
   Future<UserModel> login({required String email, required String password});
   Future<List> getFeedItems();
+  Future<Map<String, dynamic>> postFeedItem(CreatePostModel createPostModel);
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -118,11 +120,28 @@ class ApiHelperImpl extends ApiHelper {
     try {
       final response = await restClient.get(
         PublicOrProtected.protected,
-        ApiEndpoints.getFeedItems,
+        ApiEndpoints.feedPosts,
       );
       return response.data;
     } catch (e) {
       return [];
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> postFeedItem(
+      CreatePostModel createPostModel) async {
+    try {
+      final response = await restClient.post(
+        PublicOrProtected.protected,
+        ApiEndpoints.feedPosts,
+        json.encode(createPostModel),
+      );
+      return response.data;
+    } on CustomException catch (e) {
+      throw e.errorMessage;
+    } catch (e) {
+      return {};
     }
   }
 }

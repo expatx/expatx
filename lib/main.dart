@@ -1,3 +1,6 @@
+import 'package:expatx/features/shared/data/repositories/create_post_repository_impl.dart';
+import 'package:expatx/features/shared/domain/usecases/create_post.dart';
+import 'package:expatx/features/shared/presentation/bloc/create_post/create_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -32,6 +35,7 @@ import 'features/authentication/domain/usecases/register_user.dart';
 import 'features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'features/authentication/presentation/bloc/login/login_cubit.dart';
 import 'features/authentication/presentation/bloc/register/register_cubit.dart';
+import 'features/shared/data/datasources/create_post_datasource.dart';
 
 void main() {
   // Our default will eventually be DEV, but for now running backend on local.
@@ -90,6 +94,15 @@ class MyApp extends StatelessWidget {
               getFeed: GetFeed(
                 repository: FeedRepositoryImpl(
                   remoteDataSource: FeedDataSourceImpl(),
+                ),
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => CreatePostBloc(
+              createPost: CreatePost(
+                repository: CreatePostRepositoryImpl(
+                  remoteDataSource: CreatePostRemoteDataSourceImpl(),
                 ),
               ),
             ),
