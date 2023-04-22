@@ -21,15 +21,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController _postTextController = TextEditingController();
 
   createPostSubmit() {
-    BlocProvider.of<CreatePostBloc>(context).add(
-      CreatePostSubmit(
-        createPostModel: CreatePostModel(
-          content: _postTextController.text,
-          language: "English",
-          userId: context.read<AuthBloc>().state.user.id,
-        ),
-      ),
-    );
+    context.read<CreatePostBloc>().add(
+          CreatePostSubmit(
+            createPostModel: CreatePostModel(
+              content: _postTextController.text,
+              language: "English",
+              userId: context.read<AuthBloc>().state.user.id,
+            ),
+          ),
+        );
   }
 
   @override
@@ -68,11 +68,26 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               } else {
                 return TextButton(
                   onPressed: () {
-                    createPostSubmit();
-                    if (state is CreatePostSuccess) {
-                      Navigator.pop(context);
+                    if (_postTextController.text.isNotEmpty) {
+                      createPostSubmit();
+                      if (state is CreatePostFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.errorMessage),
+                          ),
+                        );
+                      }
+                      if (state is CreatePostSuccess) {
+                        Navigator.pop(context);
+                        BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please enter your post"),
+                        ),
+                      );
                     }
-                    BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
                   },
                   child: const Text(
                     "Post",
@@ -128,17 +143,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 textAlignVertical: TextAlignVertical.top,
                 expands: true,
                 maxLines: null,
-                onChanged: (val) {
-                  _postTextController.text = val;
-                },
                 keyboardType: TextInputType.multiline,
                 controller: _postTextController,
-                // validator: (val) {
-                //   if (val!.isEmpty) {
-                //     return 'Please enter some text';
-                //   }
-                //   return null;
-                // },
                 style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "Poppins",

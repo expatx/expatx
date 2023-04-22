@@ -17,7 +17,7 @@ abstract class ApiHelper {
       required String password});
   Future<UserModel> login({required String email, required String password});
   Future<List> getFeedItems();
-  Future<Map<String, dynamic>> postFeedItem(CreatePostModel createPostModel);
+  Future<Response> postFeedItem(CreatePostModel createPostModel);
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -129,19 +129,16 @@ class ApiHelperImpl extends ApiHelper {
   }
 
   @override
-  Future<Map<String, dynamic>> postFeedItem(
-      CreatePostModel createPostModel) async {
+  Future<Response> postFeedItem(CreatePostModel createPostModel) async {
     try {
       final response = await restClient.post(
         PublicOrProtected.protected,
         ApiEndpoints.feedPosts,
         json.encode(createPostModel),
       );
-      return response.data;
+      return response;
     } on CustomException catch (e) {
       throw e.errorMessage;
-    } catch (e) {
-      return {};
-    }
+    } 
   }
 }
