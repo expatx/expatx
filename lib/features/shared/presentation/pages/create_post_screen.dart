@@ -62,34 +62,32 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         actions: [
           BlocBuilder<CreatePostBloc, CreatePostState>(
             builder: (context, state) {
+              print(state);
               if (state is CreatePostLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              if (state is CreatePostSuccess) {
-                if (mounted) {
-                  // Navigator.pop(context);
-                  BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
-                }
-
-                return const SizedBox.shrink();
               } else {
                 return TextButton(
                   onPressed: () async {
                     if (_postTextController.text.isNotEmpty) {
                       await createPostSubmit(context);
-                      print("We have a response!");
-                      if (state is CreatePostFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(state.errorMessage),
-                          ),
-                        );
-                      }
                       if (state is CreatePostSuccess) {
-                        Navigator.pop(context);
-                        BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
+                        if (mounted) {
+                          // Navigator.pop(context);
+                          BlocProvider.of<FeedBloc>(context)
+                              .add(GetFeedEvent());
+                          BlocProvider.of<CreatePostBloc>(context).close();
+                        }
+                      }
+                      if (state is CreatePostFailure) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.errorMessage),
+                            ),
+                          );
+                        }
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

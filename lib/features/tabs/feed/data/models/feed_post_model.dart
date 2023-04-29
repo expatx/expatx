@@ -8,6 +8,7 @@ class FeedPostModel extends FeedPostEntity {
     required super.id,
     required super.content,
     required super.language,
+    required super.likes,
     required super.userEntity,
     required super.createdAt,
     required super.comments,
@@ -17,6 +18,7 @@ class FeedPostModel extends FeedPostEntity {
         id: json["id"],
         content: json["content"],
         language: json["language"],
+        likes: json["likes"],
         createdAt: json["created_at"],
         userEntity: UserModel.fromJson(json["user"]).toEntity(),
         comments: json["comments"] == null
@@ -29,6 +31,7 @@ class FeedPostModel extends FeedPostEntity {
         id: id,
         content: content,
         language: language,
+        likes: likes,
         userEntity: userEntity,
         createdAt: createdAt,
         comments: comments,

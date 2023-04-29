@@ -7,6 +7,7 @@ class FeedPostEntity extends Equatable {
     required this.id,
     required this.content,
     required this.language,
+    required this.likes,
     required this.userEntity,
     required this.createdAt,
     required this.comments,
@@ -15,6 +16,7 @@ class FeedPostEntity extends Equatable {
   final int id;
   final String content;
   final String language;
+  final int likes;
   final UserEntity userEntity;
   final String createdAt;
   final List<FeedPostCommentEntity>? comments;
@@ -23,6 +25,8 @@ class FeedPostEntity extends Equatable {
   List<Object?> get props => [
         id,
         content,
+        language,
+        likes,
         userEntity,
         createdAt,
         comments,
