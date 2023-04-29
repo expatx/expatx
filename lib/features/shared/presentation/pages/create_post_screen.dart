@@ -20,7 +20,7 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController _postTextController = TextEditingController();
 
-  createPostSubmit() {
+  createPostSubmit(BuildContext context) {
     context.read<CreatePostBloc>().add(
           CreatePostSubmit(
             createPostModel: CreatePostModel(
@@ -28,6 +28,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               language: "English",
               userId: context.read<AuthBloc>().state.user.id,
             ),
+            context: context,
           ),
         );
   }
@@ -65,11 +66,20 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
+              }
+              if (state is CreatePostSuccess) {
+                if (mounted) {
+                  // Navigator.pop(context);
+                  BlocProvider.of<FeedBloc>(context).add(GetFeedEvent());
+                }
+
+                return const SizedBox.shrink();
               } else {
                 return TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_postTextController.text.isNotEmpty) {
-                      createPostSubmit();
+                      await createPostSubmit(context);
+                      print("We have a response!");
                       if (state is CreatePostFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

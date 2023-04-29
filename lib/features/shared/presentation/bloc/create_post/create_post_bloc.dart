@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/usecases/create_post.dart';
@@ -19,9 +20,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     try {
       final response = await createPost
           .call(CreatePostParams(createPostModel: event.createPostModel));
+      print(response);
       response.fold(
         (l) => emit(CreatePostFailure(errorMessage: l.toString())),
-        (r) => emit(CreatePostSuccess()),
+        (r) {
+          Navigator.of(event.context).pop();
+          emit(CreatePostSuccess());
+        },
       );
     } catch (_) {
       emit(CreatePostFailure(errorMessage: "Failed to create post"));
