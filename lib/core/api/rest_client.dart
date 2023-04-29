@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:expatx/core/cache/cache_helper_impl.dart';
 
+import '../../features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import '../environment/configurations.dart/prod_config.dart';
 import '../environment/environment.dart';
 import '../error/exceptions.dart';
+import '../global.dart';
 import '../logger.dart';
 
 class RestClient {
@@ -151,7 +155,8 @@ class RestClient {
           final errorMessage = error.response?.data['message'];
           switch (error.response?.statusCode) {
             case 400:
-              throw CustomException(400, jsonEncode(error.response?.data), "");
+              throw CustomException(
+                  400, jsonEncode(error.response?.data), "Bad Request We Have");
             case 403:
               final message = errorMessage ?? '${error.response?.data}';
               throw UnauthorisedException(error.response?.statusCode, message);
@@ -201,6 +206,26 @@ class RestClient {
       ));
     }
 
+    interceptorList.add(InterceptorsWrapper(onRequest: (options, handler) {
+      return handler.next(options); //modify your request
+    }, onResponse: (response, handler) {
+      return handler.next(response); //modify your response
+    }, onError: (DioError e, handler) async {
+      // print(e.response!.statusCode);
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          // If any request ever returns unauthorized, we will log out the user.
+          if (GlobalVariable.navState.currentContext != null) {
+            GlobalVariable.navState.currentContext!.read<AuthBloc>().add(
+                  AuthLogoutUser(),
+                );
+          }
+        }
+      }
+
+      return handler.next(e); //continue
+    }));
+
     _dio.interceptors.addAll(interceptorList);
 
     if (publicOrProtected == PublicOrProtected.protected) {
@@ -230,6 +255,7 @@ class PublicApiOptions extends ApiOptions {
 // Protected API options that need Bearer Token
 class ProtectedApiOptions extends ApiOptions {
   ProtectedApiOptions(String accessToken) {
+    debugPrint(accessToken, wrapWidth: 1024);
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',

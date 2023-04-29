@@ -84,15 +84,15 @@ class CustomTextField extends StatelessWidget {
           //     width: 2.0,
           //   ),
           // ),
-          // focusedBorder: const OutlineInputBorder(
-          //   borderRadius: BorderRadius.all(
-          //     Radius.circular(10),
-          //   ),
-          //   borderSide: BorderSide(
-          //     color: AppColors.expatxPurple,
-          //     width: 2.0,
-          //   ),
-          // ),
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.expatxPurple,
+              width: 2.0,
+            ),
+          ),
           hintText: labelText,
           hintStyle: const TextStyle(
             color: AppColors.expatxBlack,

@@ -89,10 +89,19 @@ class AuthDatasourceImpl extends AuthDatasource {
   @override
   Future<void> logout() {
     return Future.delayed(const Duration(milliseconds: 300), () async {
+       await _dataHelper.apiHelper.logout();
+
       // Clear the current logged in user
       _updateLoggedInUser(userModel: UserModel.empty);
       // Clear all Cache
       await CacheHelperImpl().clearCache();
+
+      // // Remove user id from One Signal
+      // OneSignal.shared.removeExternalUserId();
+
+      // // Clear Crashlytics user id
+      // FirebaseCrashlytics.instance.setUserIdentifier("");
+
       _controller.add(AuthStatus.unauthenticated);
     });
   }

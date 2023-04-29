@@ -60,29 +60,44 @@ class _FeedScreenState extends State<FeedScreen> {
           size: 30,
         ),
       ),
-      body: BlocBuilder<FeedBloc, FeedState>(
-        builder: (context, state) {
-          if (state is FeedLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is FeedSuccess) {
-            if (state.feedEntity.isEmpty) {
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              // Color.fromARGB(255, 25, 178, 238),
+              // Color.fromARGB(255, 21, 236, 229),
+              Colors.white,
+              Color.fromARGB(255, 73, 69, 84),
+            ],
+          ),
+        ),
+        child: BlocBuilder<FeedBloc, FeedState>(
+          builder: (context, state) {
+            if (state is FeedLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is FeedSuccess) {
+              if (state.feedEntity.isEmpty) {
+                return const Center(
+                  child: Text("No Feed Info!"),
+                );
+              }
+              return _buildFeedPost(state.feedEntity);
+            } else if (state is FeedFailure) {
+              return Center(
+                child: Text(state.errorMessage),
+              );
+            } else {
               return const Center(
                 child: Text("No Feed Info!"),
               );
             }
-            return _buildFeedPost(state.feedEntity);
-          } else if (state is FeedFailure) {
-            return Center(
-              child: Text(state.errorMessage),
-            );
-          } else {
-            return const Center(
-              child: Text("No Feed Info!"),
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }

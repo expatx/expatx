@@ -16,6 +16,7 @@ abstract class ApiHelper {
       required String email,
       required String password});
   Future<UserModel> login({required String email, required String password});
+  Future<void> logout();
   Future<List> getFeedItems();
   Future<Response> postFeedItem(CreatePostModel createPostModel);
 }
@@ -71,6 +72,15 @@ class ApiHelperImpl extends ApiHelper {
       );
       UserModel userModel = UserModel.fromJson(response.data);
       return userModel;
+    } on CustomException catch (e) {
+      throw e.errorMessage;
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await restClient.delete(PublicOrProtected.protected, ApiEndpoints.logout);
     } on CustomException catch (e) {
       throw e.errorMessage;
     }
@@ -139,6 +149,6 @@ class ApiHelperImpl extends ApiHelper {
       return response;
     } on CustomException catch (e) {
       throw e.errorMessage;
-    } 
+    }
   }
 }
