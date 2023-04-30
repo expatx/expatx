@@ -1,4 +1,5 @@
 import 'package:expatx/features/shared/data/models/user_model.dart';
+import 'package:expatx/features/tabs/feed/data/models/feed_post_like_model.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 
 import 'feed_post_comment_model.dart';
@@ -18,13 +19,22 @@ class FeedPostModel extends FeedPostEntity {
         id: json["id"],
         content: json["content"],
         language: json["language"],
-        likes: json["likes"],
         createdAt: json["created_at"],
         userEntity: UserModel.fromJson(json["user"]).toEntity(),
         comments: json["comments"] == null
             ? null
             : List<FeedPostCommentModel>.from(
-                json["comments"].map((x) => FeedPostCommentModel.fromJson(x))),
+                json["comments"].map(
+                  (comment) => FeedPostCommentModel.fromJson(comment),
+                ),
+              ),
+        likes: json["likes"] == null
+            ? null
+            : List<FeedPostLikeModel>.from(
+                json["likes"].map(
+                  (like) => FeedPostLikeModel.fromJson(like),
+                ),
+              ),
       );
 
   FeedPostEntity toEntity() => FeedPostEntity(

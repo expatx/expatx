@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:expatx/features/tabs/feed/data/models/feed_post_model.dart';
 
 import '../../../../../core/data_helper.dart';
+import '../models/create_feed_post_model.dart';
 
 abstract class FeedDataSource {
-  Future<List<FeedPostModel>> getFeedItems(userId);
+  Future<List<FeedPostModel>> getFeedItems();
+  Future<Response> createPost(CreateFeedPostModel createPostModel);
 }
 
 class FeedDataSourceImpl extends FeedDataSource {
@@ -12,11 +15,16 @@ class FeedDataSourceImpl extends FeedDataSource {
   final _dataHelper = DataHelperImpl.instance;
 
   @override
-  Future<List<FeedPostModel>> getFeedItems(userId) async {
+  Future<List<FeedPostModel>> getFeedItems() async {
     List response = await _dataHelper.apiHelper.getFeedItems();
     List<FeedPostModel> listFeedItems = response
         .map<FeedPostModel>((json) => FeedPostModel.fromJson(json))
         .toList();
     return listFeedItems;
+  }
+
+  @override
+  Future<Response> createPost(CreateFeedPostModel createPostModel) async {
+    return await _dataHelper.apiHelper.postFeedItem(createPostModel);
   }
 }

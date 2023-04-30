@@ -107,20 +107,19 @@ class FeedPostWidget extends StatelessWidget {
                 border: Border(top: BorderSide(color: Colors.grey[300]!))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Icon(
-                
+              children: const [
+                Icon(
                   Icons.thumb_up_alt_outlined,
                   color: AppColors.expatxPurple,
                   size: 22,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 7,
                 ),
                 Expanded(
                   child: Text(
-                    feedPostEntity.likes.toString(),
-                    style: const TextStyle(
+                    "4",
+                    style: TextStyle(
                       color: Colors.black,
                       fontFamily: "Roboto",
                       fontWeight: FontWeight.w500,
@@ -128,7 +127,7 @@ class FeedPostWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   "3",
                   style: TextStyle(
                     color: Colors.black,
@@ -137,10 +136,10 @@ class FeedPostWidget extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 7,
                 ),
-                const Icon(
+                Icon(
                   Icons.mode_comment_rounded,
                   color: AppColors.expatxPurple,
                   size: 22,

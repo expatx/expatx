@@ -20,3 +20,15 @@ class FeedFailure extends FeedState {
 
   FeedFailure({required this.errorMessage});
 }
+
+class CreateFeedPostInitial extends FeedState {}
+
+class CreateFeedPostLoading extends FeedState {}
+
+class CreatePostSuccess extends FeedState {}
+
+class CreateFeedPostFailure extends FeedState {
+  final String errorMessage;
+
+  CreateFeedPostFailure({required this.errorMessage});
+}

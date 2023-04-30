@@ -1,14 +1,11 @@
 import 'package:expatx/core/app_colors.dart';
-import 'package:expatx/features/shared/presentation/bloc/create_post/create_post_bloc.dart';
-import 'package:expatx/features/shared/presentation/bloc/create_post/create_post_state.dart';
-import 'package:expatx/features/shared/presentation/widgets/create_post_language_dropdown.dart';
+import 'package:expatx/features/tabs/feed/presentation/widgets/create_post_language_dropdown.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../authentication/presentation/bloc/auth/auth_bloc.dart';
-import '../../data/models/create_post_model.dart';
-import '../bloc/create_post/create_post_event.dart';
+import '../../../../authentication/presentation/bloc/auth/auth_bloc.dart';
+import '../../data/models/create_feed_post_model.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
@@ -21,9 +18,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController _postTextController = TextEditingController();
 
   createPostSubmit(BuildContext context) {
-    context.read<CreatePostBloc>().add(
-          CreatePostSubmit(
-            createPostModel: CreatePostModel(
+    context.read<FeedBloc>().add(
+          CreateFeedPostSubmit(
+            createPostModel: CreateFeedPostModel(
               content: _postTextController.text,
               language: "English",
               userId: context.read<AuthBloc>().state.user.id,
@@ -60,10 +57,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           //replace with our own icon data.
         ),
         actions: [
-          BlocBuilder<CreatePostBloc, CreatePostState>(
+          BlocBuilder<FeedBloc, FeedState>(
             builder: (context, state) {
               print(state);
-              if (state is CreatePostLoading) {
+              if (state is CreateFeedPostLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -77,10 +74,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           // Navigator.pop(context);
                           BlocProvider.of<FeedBloc>(context)
                               .add(GetFeedEvent());
-                          BlocProvider.of<CreatePostBloc>(context).close();
+                          BlocProvider.of<FeedBloc>(context).close();
                         }
                       }
-                      if (state is CreatePostFailure) {
+                      if (state is CreateFeedPostFailure) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

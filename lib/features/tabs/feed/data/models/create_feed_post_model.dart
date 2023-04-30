@@ -1,9 +1,9 @@
-class CreatePostModel {
+class CreateFeedPostModel {
   final String content;
   final String language;
   final int userId;
 
-  CreatePostModel({
+  CreateFeedPostModel({
     required this.content,
     required this.language,
     required this.userId,

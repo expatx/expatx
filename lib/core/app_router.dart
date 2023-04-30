@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:expatx/features/shared/presentation/pages/create_post_screen.dart';
+import 'package:expatx/features/tabs/feed/presentation/pages/create_post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/authentication/data/datasources/auth_datasource.dart';

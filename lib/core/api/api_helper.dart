@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:expatx/core/api/api_endpoints.dart';
 import 'package:expatx/core/api/rest_client.dart';
 import 'package:expatx/core/error/exceptions.dart';
-import 'package:expatx/features/shared/data/models/create_post_model.dart';
+import 'package:expatx/features/tabs/feed/data/models/create_feed_post_model.dart';
 import 'package:expatx/features/shared/data/models/user_model.dart';
 import '../cache/cache_helper_impl.dart';
 
@@ -18,7 +18,7 @@ abstract class ApiHelper {
   Future<UserModel> login({required String email, required String password});
   Future<void> logout();
   Future<List> getFeedItems();
-  Future<Response> postFeedItem(CreatePostModel createPostModel);
+  Future<Response> postFeedItem(CreateFeedPostModel createPostModel);
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -139,7 +139,7 @@ class ApiHelperImpl extends ApiHelper {
   }
 
   @override
-  Future<Response> postFeedItem(CreatePostModel createPostModel) async {
+  Future<Response> postFeedItem(CreateFeedPostModel createPostModel) async {
     try {
       final response = await restClient.post(
         PublicOrProtected.protected,

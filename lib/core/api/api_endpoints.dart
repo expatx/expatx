@@ -8,6 +8,12 @@ class ApiEndpoints {
   static const String register = "/register";
   static const String logout = "/logout";
 
-  //Work Orders
+  //Feed Posts
   static String feedPosts = '/feed-posts';
+
+  //Feed Post Comments
+  static String feedPostComments = '/feed_post_comments';
+
+  //Feed Post Likes
+  static String feedPostLikes = '/feed_post_likes';
 }

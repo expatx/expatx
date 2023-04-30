@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:expatx/features/tabs/feed/data/datasources/feed_datasource.dart';
 import 'package:expatx/features/tabs/feed/data/models/feed_post_model.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 import 'package:expatx/features/tabs/feed/domain/repositories/feed_repository.dart';
 
-import '../../../../../core/cache/cache_helper_impl.dart';
-import '../../../../shared/data/models/user_model.dart';
+import '../models/create_feed_post_model.dart';
+
 
 class FeedRepositoryImpl implements FeedRepository {
   final FeedDataSource remoteDataSource;
@@ -15,11 +16,11 @@ class FeedRepositoryImpl implements FeedRepository {
   @override
   Future<Either<String, List<FeedPostEntity>>> getFeedHistory() async {
     try {
-      UserModel currentUser = await CacheHelperImpl().getCurrentUser();
-      int currentUserId = currentUser.id;
+      // UserModel currentUser = await CacheHelperImpl().getCurrentUser();
+      // int currentUserId = currentUser.id;
 
       final List<FeedPostModel> listFeedModels =
-          await remoteDataSource.getFeedItems(currentUserId);
+          await remoteDataSource.getFeedItems();
 
       // Convert List of models to list of entities
       List<FeedPostEntity> entities = [];
@@ -37,6 +38,22 @@ class FeedRepositoryImpl implements FeedRepository {
       print("Error: ${e.toString()}");
 
       return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, void>> createPost(
+      CreateFeedPostModel createPostModel) async {
+    try {
+      Response response = await remoteDataSource.createPost(createPostModel);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return const Right(null);
+      } else {
+        return const Left('Server error');
+      }
+    } on Exception {
+      return const Left('Server error');
     }
   }
 }
