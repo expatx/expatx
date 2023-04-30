@@ -1,6 +1,8 @@
 import 'package:expatx/core/app_colors.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
+import 'package:expatx/features/tabs/feed/presentation/pages/feed_post_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FeedPostWidget extends StatelessWidget {
@@ -34,8 +36,6 @@ class FeedPostWidget extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 40,
@@ -107,16 +107,16 @@ class FeedPostWidget extends StatelessWidget {
                 border: Border(top: BorderSide(color: Colors.grey[300]!))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.thumb_up_alt_outlined,
                   color: AppColors.expatxPurple,
                   size: 22,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 7,
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     "4",
                     style: TextStyle(
@@ -127,22 +127,39 @@ class FeedPostWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  "3",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                // Comment Count and Icon
+                InkWell(
+                  onTap: () {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen:
+                          FeedPostDetailScreen(feedPostEntity: feedPostEntity),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                  child: Row(
+                    children: const [
+                      Text(
+                        "3",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Icon(
+                        Icons.mode_comment_rounded,
+                        color: AppColors.expatxPurple,
+                        size: 22,
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Icon(
-                  Icons.mode_comment_rounded,
-                  color: AppColors.expatxPurple,
-                  size: 22,
                 ),
               ],
             ),
