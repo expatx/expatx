@@ -104,6 +104,10 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildFeedPost(List<FeedPostEntity> feedEntity) {
     return ListView.builder(
+      padding: const EdgeInsets.only(
+        bottom: 50,
+        top: 15,
+      ),
       shrinkWrap: true,
       itemCount: feedEntity.length,
       itemBuilder: (context, index) {
