@@ -24,6 +24,11 @@ class FeedPostWidget extends StatelessWidget {
             blurRadius: 5.0,
           ),
         ],
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            5,
+          ),
+        ),
       ),
       margin: const EdgeInsets.symmetric(
         vertical: 10,
