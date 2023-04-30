@@ -1,4 +1,4 @@
-
+import 'package:expatx/features/tabs/feed/domain/usecases/create_feed_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -93,9 +93,13 @@ class MyApp extends StatelessWidget {
                   remoteDataSource: FeedDataSourceImpl(),
                 ),
               ),
+              createPost: CreateFeedPost(
+                repository: FeedRepositoryImpl(
+                  remoteDataSource: FeedDataSourceImpl(),
+                ),
+              ),
             ),
           ),
-        
           BlocProvider(
             create: (context) => HistoryBloc(
               getJobHistory: GetJobHistory(

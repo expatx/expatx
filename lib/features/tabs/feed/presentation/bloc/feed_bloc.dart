@@ -12,7 +12,10 @@ part 'feed_event.dart';
 part 'feed_state.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
-  FeedBloc({required this.getFeed}) : super(FeedInitial()) {
+  FeedBloc({
+    required this.getFeed,
+    required this.createPost,
+  }) : super(FeedInitial()) {
     on<GetFeedEvent>(_onGetFeedEvent);
     on<CreateFeedPostSubmit>(_onCreatePostSubmit);
   }
