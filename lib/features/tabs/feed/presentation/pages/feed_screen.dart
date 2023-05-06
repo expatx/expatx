@@ -24,7 +24,8 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.expatxBackground,
+        elevation: 1,
         title: const Text(
           "Medellin, CO",
           style: TextStyle(
@@ -75,18 +76,25 @@ class _FeedScreenState extends State<FeedScreen> {
           ),
         ),
         child: BlocBuilder<FeedBloc, FeedState>(
+          buildWhen: (previous, current) {
+            if (current is FeedSuccess || current is FeedLoading) {
+              return true;
+            } else {
+              return false;
+            }
+          },
           builder: (context, state) {
             if (state is FeedLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (state is FeedSuccess) {
-              if (state.feedEntity.isEmpty) {
+              if (state.feedEntities.isEmpty) {
                 return const Center(
                   child: Text("No Feed Info!"),
                 );
               }
-              return _buildFeedPost(state.feedEntity);
+              return _buildFeedPost(state.feedEntities);
             } else if (state is FeedFailure) {
               return Center(
                 child: Text(state.errorMessage),

@@ -7,6 +7,7 @@ import '../models/create_feed_post_model.dart';
 abstract class FeedDataSource {
   Future<List<FeedPostModel>> getFeedItems();
   Future<Response> createPost(CreateFeedPostModel createPostModel);
+  Future<Response> likePost(int postId, int userId);
 }
 
 class FeedDataSourceImpl extends FeedDataSource {
@@ -26,5 +27,10 @@ class FeedDataSourceImpl extends FeedDataSource {
   @override
   Future<Response> createPost(CreateFeedPostModel createPostModel) async {
     return await _dataHelper.apiHelper.postFeedItem(createPostModel);
+  }
+
+  @override
+  Future<Response> likePost(int postId, int userId) async {
+    return await _dataHelper.apiHelper.likePost(postId, userId);
   }
 }

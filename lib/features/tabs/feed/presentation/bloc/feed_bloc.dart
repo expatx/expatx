@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:expatx/features/tabs/feed/domain/usecases/like_feed_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
@@ -15,13 +16,16 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
   FeedBloc({
     required this.getFeed,
     required this.createPost,
+    required this.likePost,
   }) : super(FeedInitial()) {
     on<GetFeedEvent>(_onGetFeedEvent);
     on<CreateFeedPostSubmit>(_onCreatePostSubmit);
+    on<LikeFeedPostEvent>(_onLikePostEvent);
   }
 
   late GetFeed getFeed;
   late CreateFeedPost createPost;
+  late LikeFeedPost likePost;
 
   Future<void> _onGetFeedEvent(
     GetFeedEvent event,
@@ -40,7 +44,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
             errorMessage: l.toString(),
           ),
         ),
-        (r) => emit(FeedSuccess(feedEntity: r)),
+        (r) => emit(FeedSuccess(feedEntities: r)),
       );
     } catch (_) {
       emit(
@@ -69,6 +73,24 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       );
     } catch (_) {
       emit(CreateFeedPostFailure(errorMessage: "Failed to create post"));
+    }
+  }
+
+  Future<void> _onLikePostEvent(
+    LikeFeedPostEvent event,
+    Emitter<FeedState> emit,
+  ) async {
+    try {
+      final response = await likePost.call(LikeFeedPostParams(
+          feedPostId: event.feedPostId, userId: event.userId));
+      response.fold(
+        (l) => emit(LikeFeedPostFailure(errorMessage: l.toString())),
+        (r) async {
+          print("success");
+        }
+      );
+    } catch (_) {
+      emit(LikeFeedPostFailure(errorMessage: "Failed to like post"));
     }
   }
 }

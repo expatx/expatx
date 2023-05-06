@@ -12,6 +12,6 @@ class GetFeed
 
   @override
   call(NoParams params) async {
-    return await repository.getFeedHistory();
+    return await repository.getFeed();
   }
 }

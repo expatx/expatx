@@ -1,4 +1,5 @@
 import 'package:expatx/features/tabs/feed/domain/usecases/create_feed_post.dart';
+import 'package:expatx/features/tabs/feed/domain/usecases/like_feed_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -94,6 +95,11 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               createPost: CreateFeedPost(
+                repository: FeedRepositoryImpl(
+                  remoteDataSource: FeedDataSourceImpl(),
+                ),
+              ),
+              likePost: LikeFeedPost(
                 repository: FeedRepositoryImpl(
                   remoteDataSource: FeedDataSourceImpl(),
                 ),

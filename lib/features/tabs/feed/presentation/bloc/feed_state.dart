@@ -10,9 +10,9 @@ class FeedInitial extends FeedState {}
 class FeedLoading extends FeedState {}
 
 class FeedSuccess extends FeedState {
-  final List<FeedPostEntity> feedEntity;
+  final List<FeedPostEntity> feedEntities;
 
-  FeedSuccess({required this.feedEntity});
+  FeedSuccess({required this.feedEntities});
 }
 
 class FeedFailure extends FeedState {
@@ -31,4 +31,13 @@ class CreateFeedPostFailure extends FeedState {
   final String errorMessage;
 
   CreateFeedPostFailure({required this.errorMessage});
+}
+
+class LikeFeedPostInitial extends FeedState {}
+class LikeFeedPostLoading extends FeedState {}
+class LikeFeedPostSuccess extends FeedState {}
+class LikeFeedPostFailure extends FeedState {
+  final String errorMessage;
+
+  LikeFeedPostFailure({required this.errorMessage});
 }

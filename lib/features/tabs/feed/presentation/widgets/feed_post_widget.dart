@@ -2,8 +2,11 @@ import 'package:expatx/core/app_colors.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 import 'package:expatx/features/tabs/feed/presentation/pages/feed_post_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../bloc/feed_bloc.dart';
 
 class FeedPostWidget extends StatelessWidget {
   final FeedPostEntity feedPostEntity;
@@ -14,6 +17,7 @@ class FeedPostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var numberOfLikes = feedPostEntity.likes!.length;
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -113,18 +117,27 @@ class FeedPostWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Icon(
-                  Icons.thumb_up_alt_outlined,
-                  color: AppColors.expatxPurple,
-                  size: 22,
+                InkWell(
+                  onTap: () {
+                    context.read<FeedBloc>().add(LikeFeedPostEvent(
+                        feedPostId: feedPostEntity.id,
+                        userId: feedPostEntity.userEntity.id));
+                  },
+                  child: const Icon(
+                    Icons.thumb_up_alt_outlined,
+                    color: AppColors.expatxPurple,
+                    size: 22,
+                  ),
                 ),
                 const SizedBox(
                   width: 7,
                 ),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    "4",
-                    style: TextStyle(
+                    numberOfLikes.toString() == "0"
+                        ? ""
+                        : numberOfLikes.toString(),
+                    style: const TextStyle(
                       color: Colors.black,
                       fontFamily: "Roboto",
                       fontWeight: FontWeight.w500,

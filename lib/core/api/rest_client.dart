@@ -216,6 +216,7 @@ class RestClient {
         if (e.response!.statusCode == 401) {
           // If any request ever returns unauthorized, we will log out the user.
           if (GlobalVariable.navState.currentContext != null) {
+      
             GlobalVariable.navState.currentContext!.read<AuthBloc>().add(
                   AuthLogoutUser(),
                 );

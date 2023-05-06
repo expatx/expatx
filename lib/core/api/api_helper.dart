@@ -19,6 +19,7 @@ abstract class ApiHelper {
   Future<void> logout();
   Future<List> getFeedItems();
   Future<Response> postFeedItem(CreateFeedPostModel createPostModel);
+  Future<Response> likePost(int postId, int userId);
 }
 
 class ApiHelperImpl extends ApiHelper {
@@ -145,6 +146,24 @@ class ApiHelperImpl extends ApiHelper {
         PublicOrProtected.protected,
         ApiEndpoints.feedPosts,
         json.encode(createPostModel),
+      );
+      return response;
+    } on CustomException catch (e) {
+      throw e.errorMessage;
+    }
+  }
+
+  @override
+  Future<Response> likePost(int postId, int userId) async {
+    try {
+      final response = await restClient.post(
+        PublicOrProtected.protected,
+        ApiEndpoints.feedPostLikes,
+        json.encode(
+          {
+            "feed_post_like": {"feed_post_id": postId, "user_id": userId}
+          },
+        ),
       );
       return response;
     } on CustomException catch (e) {
