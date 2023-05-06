@@ -18,12 +18,3 @@ class CreateFeedPostSubmit extends FeedEvent {
   List<Object> get props => [createPostModel];
 }
 
-class LikeFeedPostEvent extends FeedEvent {
-  final int feedPostId;
-  final int userId;
-
-  LikeFeedPostEvent({required this.feedPostId, required this.userId});
-
-  @override
-  List<Object> get props => [feedPostId, userId];
-}

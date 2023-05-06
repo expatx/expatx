@@ -55,17 +55,14 @@ class FeedRepositoryImpl implements FeedRepository {
       return const Left('Server error');
     }
   }
-  
-  @override
-  Future<Either<String, void>> likePost(int postId, int userId) async {
-     try {
-      Response response = await remoteDataSource.likePost(postId, userId);
 
-      if (response.statusCode == 200) {
-        return const Right(null);
-      } else {
-        return const Left('Server error');
-      }
+  @override
+  Future<Either<String, FeedPostEntity>> likePost(
+      int postId, int userId) async {
+    try {
+      FeedPostModel response = await remoteDataSource.likePost(postId, userId);
+
+      return Right(response.toEntity());
     } on Exception {
       return const Left('Server error');
     }

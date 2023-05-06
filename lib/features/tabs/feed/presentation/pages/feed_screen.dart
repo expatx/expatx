@@ -3,7 +3,7 @@ import 'package:expatx/features/tabs/feed/presentation/widgets/feed_post_widget.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
-import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
+import 'package:expatx/features/tabs/feed/presentation/bloc/feed/feed_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class FeedScreen extends StatefulWidget {

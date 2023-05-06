@@ -33,11 +33,4 @@ class CreateFeedPostFailure extends FeedState {
   CreateFeedPostFailure({required this.errorMessage});
 }
 
-class LikeFeedPostInitial extends FeedState {}
-class LikeFeedPostLoading extends FeedState {}
-class LikeFeedPostSuccess extends FeedState {}
-class LikeFeedPostFailure extends FeedState {
-  final String errorMessage;
 
-  LikeFeedPostFailure({required this.errorMessage});
-}

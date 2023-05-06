@@ -6,5 +6,5 @@ import '../../data/models/create_feed_post_model.dart';
 abstract class FeedRepository {
   Future<Either<String, List<FeedPostEntity>>> getFeed();
   Future<Either<String, void>> createPost(CreateFeedPostModel createPostModel);
-  Future<Either<String, void>> likePost(int postId, int userId);
+  Future<Either<String, FeedPostEntity>> likePost(int postId, int userId);
 }

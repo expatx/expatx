@@ -1,5 +1,6 @@
 import 'package:expatx/features/tabs/feed/domain/usecases/create_feed_post.dart';
 import 'package:expatx/features/tabs/feed/domain/usecases/like_feed_post.dart';
+import 'package:expatx/features/tabs/feed/presentation/bloc/feed_post/feed_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -8,7 +9,7 @@ import 'package:expatx/core/network/network_info.dart';
 import 'package:expatx/features/tabs/feed/data/datasources/feed_datasource.dart';
 import 'package:expatx/features/tabs/feed/data/repositories/feed_repository_impl.dart';
 import 'package:expatx/features/tabs/feed/domain/usecases/get_feed.dart';
-import 'package:expatx/features/tabs/feed/presentation/bloc/feed_bloc.dart';
+import 'package:expatx/features/tabs/feed/presentation/bloc/feed/feed_bloc.dart';
 import 'package:expatx/features/tabs/finances/data/datasource/finance_datasource.dart';
 import 'package:expatx/features/tabs/finances/data/repository/finance_repository_impl.dart';
 import 'package:expatx/features/tabs/finances/domain/usecase/get_finance_history.dart';
@@ -99,6 +100,10 @@ class MyApp extends StatelessWidget {
                   remoteDataSource: FeedDataSourceImpl(),
                 ),
               ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => FeedPostBloc(
               likePost: LikeFeedPost(
                 repository: FeedRepositoryImpl(
                   remoteDataSource: FeedDataSourceImpl(),
