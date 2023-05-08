@@ -16,4 +16,5 @@ class ApiEndpoints {
 
   //Feed Post Likes
   static String feedPostLikes = '/feed_post_likes';
+  static String feedPostUnlike = '/unlike';
 }

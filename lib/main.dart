@@ -1,5 +1,6 @@
 import 'package:expatx/features/tabs/feed/domain/usecases/create_feed_post.dart';
 import 'package:expatx/features/tabs/feed/domain/usecases/like_feed_post.dart';
+import 'package:expatx/features/tabs/feed/domain/usecases/unlike_feed_post.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_post/feed_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +40,7 @@ import 'features/authentication/presentation/bloc/register/register_cubit.dart';
 void main() {
   // Our default will eventually be DEV, but for now running backend on local.
   const String environment =
-      String.fromEnvironment('ENVIRONMENT', defaultValue: Environment.local);
+      String.fromEnvironment('ENVIRONMENT', defaultValue: Environment.dev);
 
   Environment().initConfig(environment);
 
@@ -105,6 +106,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => FeedPostBloc(
               likePost: LikeFeedPost(
+                repository: FeedRepositoryImpl(
+                  remoteDataSource: FeedDataSourceImpl(),
+                ),
+              ),
+              unlikePost: UnlikeFeedPost(
                 repository: FeedRepositoryImpl(
                   remoteDataSource: FeedDataSourceImpl(),
                 ),

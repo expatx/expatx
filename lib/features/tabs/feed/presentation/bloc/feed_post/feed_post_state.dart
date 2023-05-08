@@ -37,3 +37,24 @@ class LikeFeedPostFailure extends FeedPostState {
 
   LikeFeedPostFailure({required this.errorMessage, required this.feedPostId});
 }
+
+class UnlikeFeedPostInitial extends FeedPostState {}
+
+class UnlikeFeedPostLoading extends FeedPostState {
+  final int feedPostId;
+
+  UnlikeFeedPostLoading({required this.feedPostId});
+}
+
+class UnlikeFeedPostSuccess extends FeedPostState {
+  final FeedPostEntity feedEntity;
+
+  UnlikeFeedPostSuccess({required this.feedEntity});
+}
+
+class UnlikeFeedPostFailure extends FeedPostState {
+  final int feedPostId;
+  final String errorMessage;
+
+  UnlikeFeedPostFailure({required this.errorMessage, required this.feedPostId});
+}

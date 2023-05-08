@@ -14,3 +14,13 @@ class LikeFeedPostEvent extends FeedPostEvent {
   @override
   List<Object> get props => [feedPostId, userId];
 }
+
+class UnlikeFeedPostEvent extends FeedPostEvent {
+  final int feedPostId;
+  final int userId;
+
+  UnlikeFeedPostEvent({required this.feedPostId, required this.userId});
+
+  @override
+  List<Object> get props => [feedPostId, userId];
+}

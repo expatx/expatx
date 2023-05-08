@@ -7,4 +7,5 @@ abstract class FeedRepository {
   Future<Either<String, List<FeedPostEntity>>> getFeed();
   Future<Either<String, void>> createPost(CreateFeedPostModel createPostModel);
   Future<Either<String, FeedPostEntity>> likePost(int postId, int userId);
+  Future<Either<String, FeedPostEntity>> unlikePost(int postId, int userId);
 }

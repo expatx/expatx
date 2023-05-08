@@ -67,4 +67,16 @@ class FeedRepositoryImpl implements FeedRepository {
       return const Left('Server error');
     }
   }
+
+  @override
+  Future<Either<String, FeedPostEntity>> unlikePost(
+      int postId, int userId) async {
+    try {
+      FeedPostModel response = await remoteDataSource.unlikePost(postId, userId);
+
+      return Right(response.toEntity());
+    } on Exception {
+      return const Left('Server error');
+    }
+  }
 }

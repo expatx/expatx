@@ -1,4 +1,5 @@
 import 'package:expatx/core/app_colors.dart';
+import 'package:expatx/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'package:expatx/features/tabs/feed/domain/entities/feed_post_entity.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_post/feed_post_bloc.dart';
 import 'package:expatx/features/tabs/feed/presentation/bloc/feed_post/feed_post_state.dart';
@@ -19,7 +20,15 @@ class FeedPostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var numberOfLikes = feedPostEntity.likes!.length;
+    int numberOfLikes = feedPostEntity.likes!.length;
+    bool likedByCurrentUser = false;
+
+    for (var like in feedPostEntity.likes!) {
+      if (like.user.id == context.read<AuthBloc>().state.user.id) {
+        likedByCurrentUser = true;
+        break;
+      }
+    }
     return BlocBuilder<FeedPostBloc, FeedPostState>(
       builder: (context, state) {
         if (state is LikeFeedPostLoading) {
@@ -29,6 +38,14 @@ class FeedPostWidget extends StatelessWidget {
         } else if (state is LikeFeedPostFailure) {
           if (state.feedPostId == feedPostEntity.id) {
             numberOfLikes = numberOfLikes - 1;
+          }
+        } else if (state is UnlikeFeedPostLoading) {
+          if (state.feedPostId == feedPostEntity.id) {
+            numberOfLikes = numberOfLikes - 1;
+          }
+        } else if (state is UnlikeFeedPostFailure) {
+          if (state.feedPostId == feedPostEntity.id) {
+            numberOfLikes = numberOfLikes + 1;
           }
         }
         return Container(
@@ -132,12 +149,29 @@ class FeedPostWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.read<FeedPostBloc>().add(LikeFeedPostEvent(
-                            feedPostId: feedPostEntity.id,
-                            userId: feedPostEntity.userEntity.id));
+                        if (likedByCurrentUser) {
+                          context.read<FeedPostBloc>().add(
+                                UnlikeFeedPostEvent(
+                                  feedPostId: feedPostEntity.id,
+                                  userId:
+                                      context.read<AuthBloc>().state.user.id,
+                                ),
+                              );
+                        } else {
+                          context.read<FeedPostBloc>().add(
+                                LikeFeedPostEvent(
+                                  feedPostId: feedPostEntity.id,
+                                  userId:
+                                      context.read<AuthBloc>().state.user.id,
+                                ),
+                              );
+                        }
+                        likedByCurrentUser = !likedByCurrentUser;
                       },
-                      child: const Icon(
-                        Icons.thumb_up_alt_outlined,
+                      child: Icon(
+                        likedByCurrentUser
+                            ? Icons.thumb_up_alt_rounded
+                            : Icons.thumb_up_alt_outlined,
                         color: AppColors.expatxPurple,
                         size: 22,
                       ),
@@ -148,6 +182,12 @@ class FeedPostWidget extends StatelessWidget {
                     BlocBuilder<FeedPostBloc, FeedPostState>(
                       builder: (context, state) {
                         if (state is LikeFeedPostSuccess) {
+                          if (state.feedEntity.id == feedPostEntity.id) {
+                            var newLikesCount = state.feedEntity.likes!.length;
+                            numberOfLikes = newLikesCount;
+                          }
+                        }
+                        if (state is UnlikeFeedPostSuccess) {
                           if (state.feedEntity.id == feedPostEntity.id) {
                             var newLikesCount = state.feedEntity.likes!.length;
                             numberOfLikes = newLikesCount;

@@ -8,6 +8,8 @@ abstract class FeedDataSource {
   Future<List<FeedPostModel>> getFeedItems();
   Future<Response> createPost(CreateFeedPostModel createPostModel);
   Future<FeedPostModel> likePost(int postId, int userId);
+  Future<FeedPostModel> unlikePost(int postId, int userId);
+
 }
 
 class FeedDataSourceImpl extends FeedDataSource {
@@ -35,5 +37,12 @@ class FeedDataSourceImpl extends FeedDataSource {
     FeedPostModel feedPostModel = FeedPostModel.fromJson(response.data);
     return feedPostModel;
 
+  }
+
+  @override
+  Future<FeedPostModel> unlikePost(int postId, int userId) async {
+    Response response = await _dataHelper.apiHelper.unlikePost(postId, userId);
+    FeedPostModel feedPostModel = FeedPostModel.fromJson(response.data);
+    return feedPostModel;
   }
 }
