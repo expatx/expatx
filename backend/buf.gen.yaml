@@ -5,8 +5,8 @@ managed:
     default: github.com/expatx/expatx/backend
 plugins:
   - plugin: buf.build/protocolbuffers/go
-    out: api
+    out: .
     opt: paths=source_relative
   - plugin: buf.build/bufbuild/connect-go
-    out: api
+    out: .
     opt: paths=source_relative
