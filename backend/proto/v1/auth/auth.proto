@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package auth.v1;
 
-import "proto/user/v1/user.proto";
+option go_package = "github.com/expatx/expatx/backend/gen/go/proto/v1/auth";
+
+import "proto/v1/user/user.proto";
 
 message SignupRequest {
   string email = 1;

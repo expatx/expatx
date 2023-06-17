@@ -1,12 +1,10 @@
 version: v1
-managed:
-  enabled: true
-  go_package_prefix:
-    default: github.com/expatx/expatx/backend
 plugins:
-  - plugin: buf.build/protocolbuffers/go
-    out: .
-    opt: paths=source_relative
-  - plugin: buf.build/bufbuild/connect-go
-    out: .
-    opt: paths=source_relative
+  - name: go
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: gen/go
+    opt:
+      - paths=source_relative

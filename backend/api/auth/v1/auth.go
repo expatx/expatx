@@ -8,6 +8,8 @@ import (
 	"google.golang.org/grpc/status"
 	"strings"
 	"time"
+
+	auth "github.com/expatx/expatx/backend/gen/go/proto/auth/v1"
 )
 
 // Auth represents the authentication service.
