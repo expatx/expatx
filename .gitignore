@@ -1,8 +1,34 @@
-backend/.idea
-backend/.vscode
-backend/vendor
-../.idea
-../.vscode
-../vendor
+# 📂.gitignore
 
+# Go related
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/vendor/
+/bin/
+
+# GoLand, IntelliJ IDEA related
 .idea/
+
+# VSCode related
+.vscode/
+*.code-workspace
+
+# Flutter/Dart/Pub related
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+.pub/
+/build/
+
+# Miscellaneous
+*.log
+*.swp
+*.bak
+*~
+*.sw?
+.DS_Store
