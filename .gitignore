@@ -1,0 +1,8 @@
+backend/.idea
+backend/.vscode
+backend/vendor
+../.idea
+../.vscode
+../vendor
+
+.idea/

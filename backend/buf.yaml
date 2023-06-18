@@ -1,9 +1,4 @@
 version: v1
-
-workspaces:
-  - name: expatx
-    path: .
-
 breaking:
   use:
     - FILE
